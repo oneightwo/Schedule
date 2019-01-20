@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_schedules"
+            android:enabled="true"
+            android:icon="@drawable/ic_shedule_24dp"
+            android:title="@string/schedule"
+            app:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/action_alarms"
+            android:enabled="true"
+            android:icon="@drawable/ic_alarm_black_24dp"
+            android:title="@string/alarm"
+            app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/action_settings"
+            android:enabled="true"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings"
+            app:showAsAction="ifRoom"/>
+</menu>

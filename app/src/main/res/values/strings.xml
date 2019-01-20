@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Schedule</string>
+    <string name="schedule">Расписание</string>
+    <string name="alarm">Будильник</string>
+    <string name="settings">Настройки</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="new_subject">Новый предмет</string>
+    <string name="subject">Предмет</string>
+    <string name="example_subject">Пример: Высшая математика</string>
+    <string name="example_time">Пример: 8:00–9:45</string>
+    <string name="example_teacher">Пример: Иванов Иван Иванович</string>
+    <string name="example_cabinet">Пример: 402</string>
+
+    <string-array name="menu_array">
+        <item>Предметы</item>
+        <item>Время пар</item>
+        <item>Кабинеты</item>
+        <item>Преподаватели</item>
+    </string-array>
+
+</resources>

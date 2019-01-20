@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+    <RelativeLayout
+            android:id="@+id/add_subject_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/plus_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_add_black_24dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/plus_iv"
+                android:textColor="@color/colorPink"
+                android:hint="@string/subject"/>
+
+        <TextView
+                android:id="@+id/input_subject_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorAccent"
+                android:layout_toEndOf="@+id/plus_iv"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
