@@ -11,6 +11,7 @@
             android:id="@+id/choice_s"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:elevation="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

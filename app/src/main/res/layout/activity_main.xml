@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -22,7 +22,8 @@
             android:layout_gravity="bottom"
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
-            android:background="@color/colorPrimary"
+            android:elevation="8dp"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             app:menu="@menu/bottom_navigation_menu"/>
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

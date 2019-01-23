@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
-import com.oneightwo.schedule.database.subject.Subject
-import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
@@ -45,10 +43,11 @@ class SettingsFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        log(position.toString())
         index = position
         adapterSettings.indexMenu = index
-        adapterSettings.update(viewModel.getAllData(index))
+        viewModel.getAllData(index) {
+            adapterSettings.update(it)
+        }
     }
 
     private fun initSpinner() {
@@ -67,7 +66,9 @@ class SettingsFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     private fun initRecyclerView(view: View) {
         set_subjects_rv.layoutManager = LinearLayoutManager(view.context)
         set_subjects_rv.adapter = adapterSettings
-        adapterSettings.add(viewModel.getAllData(index))
+        viewModel.getAllData(index){
+            adapterSettings.add(it)
+        }
         //set_subjects_rv.itemAnimator = null
     }
 }
