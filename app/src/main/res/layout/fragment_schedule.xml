@@ -9,19 +9,15 @@
         android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
-            android:id="@+id/sliding_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:elevation="12dp"
+            android:id="@+id/schedule_tl"
+            style="@style/TabLayout"
             app:tabIndicatorColor="@android:color/white"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextColor="@android:color/white"
-
             app:tabMode="scrollable"/>
 
     <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+            android:id="@+id/schedule_vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
