@@ -22,6 +22,9 @@ interface SubjectDao{
 //            "last_name LIKE :last LIMIT 1")
 //    fun findByName(subject: String): Subject
 
+//    @Query("DELETE FROM subject WHERE id = (:subjectIds)")
+//    fun deleteMultiple(vararg subjectIds: Subject)
+
     @Insert
     fun insertAll(vararg subjects: Subject)
 

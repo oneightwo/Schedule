@@ -10,19 +10,11 @@ import io.reactivex.schedulers.Schedulers
 class SubjectViewModel : ViewModel() {
 
     private var data = arrayListOf<Subject>()
-    private var positionStorage = arrayListOf<Int>()
+    val positionStorage = arrayListOf<Int>()
+    var isAdd = true
+    val deleteData = arrayListOf<Subject>()
 
-    fun addPosition(position: Int) {
-        positionStorage.add(position)
-    }
-
-    fun removePosition(position: Int) {
-        positionStorage.remove(position)
-    }
-
-    fun getPositions() = ArrayList<Int>(positionStorage)
-
-
+   // private lateinit var subject: LiveData<List<Subject>>
 
     fun getAll(callback: (List<Subject>) -> Unit) {
         if (data.isEmpty()) {
@@ -47,9 +39,10 @@ class SubjectViewModel : ViewModel() {
             }
     }
 
-    fun deleteData(data: Subject, callback: (List<Subject>) -> Unit) {
+    fun deleteData(callback: (List<Subject>) -> Unit) {
         val o = Observable.fromCallable {
-            App.db.subjectDao().delete(data)
+            for (d in deleteData)
+                App.db.subjectDao().delete(d)
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -67,11 +60,16 @@ class SubjectViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                getAllData{
+                getAllData {
                     callback(it)
                 }
             }
+    }
 
+    fun clear() {
+        isAdd = true
+        deleteData.clear()
+        positionStorage.clear()
     }
 
 }

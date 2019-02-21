@@ -12,7 +12,7 @@ abstract class BaseSettingFragment<T>(
     private val index: Int
 ) : BaseFragment() {
 
-    fun clickFloatingActionButton(add: (String) -> Unit) {
+    fun clickAddFAB(add: (String) -> Unit) {
         add_fab.setOnClickListener {
             val view = layoutInflater.inflate(R.layout.dialog_add, null)
             val dialog = AlertDialog.Builder(context)
@@ -22,6 +22,7 @@ abstract class BaseSettingFragment<T>(
                 formatInput(view)
                 save_b.setOnClickListener {
                     if (!add_data_et.text.isNullOrEmpty()) {
+
                         add(add_data_et.text.toString())
                         dialog.dismiss()
                     }
@@ -33,6 +34,7 @@ abstract class BaseSettingFragment<T>(
             dialog.show()
         }
     }
+
 
     private fun formatInput(view: View) {
         with(view.add_hint_data_tv) {
@@ -57,7 +59,7 @@ abstract class BaseSettingFragment<T>(
         }
     }
 
-    abstract fun deleteData(data: T)
+//    abstract fun deleteData(data: T)
 
     abstract fun getAllData()
 

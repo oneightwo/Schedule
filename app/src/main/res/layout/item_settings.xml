@@ -10,6 +10,16 @@
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground">
 
+        <ImageView
+                android:id="@+id/check_box_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
         <TextView
                 android:id="@+id/input_subject_tv"
                 android:layout_width="wrap_content"
@@ -17,19 +27,9 @@
                 android:layout_margin="16dp"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
+                android:layout_toEndOf="@id/check_box_iv"
                 android:layout_centerVertical="true"/>
 
-        <ImageView
-                android:id="@+id/plus_iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_add_black_24dp"/>
 
         <View
                 android:layout_width="match_parent"
