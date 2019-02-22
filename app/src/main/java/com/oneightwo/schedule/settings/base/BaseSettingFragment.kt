@@ -10,7 +10,30 @@ import kotlinx.android.synthetic.main.fragment_item_setting.*
 
 abstract class BaseSettingFragment<T>(
     private val index: Int
+//    private val vmClass: ViewModel
 ) : BaseFragment() {
+//
+//    private val viewModel by lazy {
+//        ViewModelProviders.of(this)
+//            .get(vmClass::class.java)
+//    }
+
+    abstract fun addData(data: String)
+
+    abstract fun modeFAB()
+
+    abstract fun clickDeleteFAB()
+
+    abstract fun addPosition(position: Int, data: T)
+
+    abstract fun removePosition(position: Int, data: T)
+
+    abstract fun getPositions(): ArrayList<Int>
+
+    abstract fun setLongClick(isClick: Boolean)
+
+    abstract fun isLongClick(): Boolean
+
 
     fun clickAddFAB(add: (String) -> Unit) {
         add_fab.setOnClickListener {
@@ -49,7 +72,7 @@ abstract class BaseSettingFragment<T>(
                 }
                 2 -> {
                     hint = context.getString(R.string.example_cabinet)
-                    add_data_et.inputType = TYPE_CLASS_NUMBER
+                    add_data_et.inputType = TYPE_CLASS_TEXT
                 }
                 3 -> {
                     hint = context.getString(R.string.example_teacher)
@@ -58,9 +81,5 @@ abstract class BaseSettingFragment<T>(
             }
         }
     }
-
-//    abstract fun deleteData(data: T)
-
-    abstract fun getAllData()
 
 }
