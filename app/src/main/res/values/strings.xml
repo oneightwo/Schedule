@@ -26,12 +26,27 @@
     <string name="example_time">Пример: 8:00–9:45</string>
     <string name="example_teacher">Пример: Иванов Иван Иванович</string>
     <string name="example_cabinet">Пример: 402</string>
+    <string name="change_schedule">Изменение расписания</string>
 
     <string-array name="menu_array">
         <item>Предметы</item>
         <item>Время пар</item>
         <item>Кабинеты</item>
         <item>Преподаватели</item>
+    </string-array>
+
+    <string-array name="day_of_week_array">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+    </string-array>
+
+    <string-array name="number_week_array">
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
 </resources>

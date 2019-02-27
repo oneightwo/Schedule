@@ -44,9 +44,9 @@ class SubjectFragment : BaseSettingFragment<Subject>(0) {
 //        viewModel.getAll().observe(this, Observer {
 //            initRecyclerView(it)
 //        })
-
+//        add_fab.hide()
+//        add_fab.show()
         modeFAB()
-
         viewModel.getAll {
             initRecyclerView(it)
         }
