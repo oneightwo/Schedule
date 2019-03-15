@@ -1,10 +1,11 @@
-package com.oneightwo.schedule.schedule
+package com.oneightwo.schedule.schedule.menu
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.oneightwo.schedule.R
+import com.oneightwo.schedule.schedule.day.DayFragment
 
 class DaysViewPagerAdapter(
     private val context: Context,
@@ -12,7 +13,7 @@ class DaysViewPagerAdapter(
 ) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return DayFragment()
+        return DayFragment.newInstance(position)
     }
 
     override fun getCount() = 6

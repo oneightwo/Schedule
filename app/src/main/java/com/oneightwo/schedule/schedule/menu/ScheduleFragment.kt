@@ -1,12 +1,15 @@
-package com.oneightwo.schedule.schedule
+package com.oneightwo.schedule.schedule.menu
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
+import com.oneightwo.schedule.database.schedule.Schedule
+import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.dialog_schedule.view.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 
@@ -25,10 +28,16 @@ class ScheduleFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        schedule_vp.adapter = DaysViewPagerAdapter(context ?: return, childFragmentManager)
+        schedule_vp.adapter =
+            DaysViewPagerAdapter(context ?: return, childFragmentManager)
         schedule_tl.setupWithViewPager(schedule_vp)
         initMainFAB()
-        initSettingFAB()
+        viewModel.getStateMainFAB().observe(this, Observer {
+            clickMainFAB(it)
+        })
+        viewModel.getStateSettingFAB().observe(this, Observer {
+            initSettingFAB(it)
+        })
     }
 
     private fun initSpinners(view: View) {
@@ -59,46 +68,27 @@ class ScheduleFragment : BaseFragment() {
 
     }
 
-    private fun initMainFAB() {
-        if (viewModel.week == 1) {
-            main_fab.setImageResource(R.drawable.ic_week_1_white_24dp)
-        } else {
-            main_fab.setImageResource(R.drawable.ic_week_2_white_24dp)
-        }
-        if (viewModel.isSetting) {
-            setting_fab.show()
-        } else {
-            setting_fab.hide()
-        }
+    private fun clickMainFAB(state: Boolean) {
+        if (state) main_fab.setImageResource(R.drawable.ic_week_1_white_24dp)
+        else main_fab.setImageResource(R.drawable.ic_week_2_white_24dp)
+    }
 
+    private fun initMainFAB() {
         main_fab.setOnClickListener {
-            if (viewModel.week == 1) {
-                main_fab.hide()
-                main_fab.setImageResource(R.drawable.ic_week_2_white_24dp)
-                main_fab.show()
-                viewModel.week = 2
-            } else {
-                main_fab.hide()
-                main_fab.setImageResource(R.drawable.ic_week_1_white_24dp)
-                main_fab.show()
-                viewModel.week = 1
-            }
+            viewModel.changeStateMainFAB()
         }
 
         main_fab.setOnLongClickListener {
-
-            if (!setting_fab.isOrWillBeShown) {
-                setting_fab.show()
-                viewModel.isSetting = true
-            } else {
-                setting_fab.hide()
-                viewModel.isSetting = false
-            }
+            viewModel.changeStateSettingFAB()
             return@setOnLongClickListener true
         }
     }
 
-    private fun initSettingFAB() {
+    private fun initSettingFAB(state: Boolean) {
+
+        if (state) setting_fab.show()
+        else setting_fab.hide()
+
         setting_fab.setOnClickListener {
             val view = layoutInflater.inflate(R.layout.dialog_schedule, null)
             val dialog = AlertDialog.Builder(context)
@@ -106,7 +96,27 @@ class ScheduleFragment : BaseFragment() {
                 .create()
             initSpinners(view)
             with(view) {
-                //                save_b.setOnClickListener {
+                save_b.setOnClickListener {
+                    log("${day_s.selectedItemPosition}")
+                    viewModel.addDay(
+                        Schedule(
+                            0,
+                            week_s.selectedItem.toString().toInt(),
+                            day_s.selectedItemPosition,
+                            time_s.selectedItem.toString(),
+                            subject_s.selectedItem.toString(),
+                            cabinet_s.selectedItem.toString(),
+                            teacher_s.selectedItem.toString()
+                        )
+                    )
+
+                    setting_fab.hide()
+                }
+                cancel_b.setOnClickListener {
+                    setting_fab.hide()
+                    dialog.dismiss()
+                }
+// save_b.setOnClickListener {
 //                    if (!add_data_et.text.isNullOrEmpty()) {
 //                        dialog.dismiss()
 //                    }

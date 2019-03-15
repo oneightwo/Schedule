@@ -42,6 +42,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.github.wangjiegulu:rfab:2.0.0'
+    implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
 }
 
 def viewModelAndLiveData() {
@@ -54,7 +55,7 @@ def viewModelAndLiveData() {
 
 def room() {
     dependencies {
-        def room_version = "2.1.0-alpha02"
+        def room_version = "2.1.0-alpha04"
 
         implementation "androidx.room:room-runtime:$room_version"
         kapt "androidx.room:room-compiler:$room_version"

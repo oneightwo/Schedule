@@ -1,7 +1,9 @@
-package com.oneightwo.schedule.schedule
+package com.oneightwo.schedule.schedule.menu
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oneightwo.schedule.database.cabinet.Cabinet
+import com.oneightwo.schedule.database.schedule.Schedule
 import com.oneightwo.schedule.database.subject.Subject
 import com.oneightwo.schedule.database.teacher.Teacher
 import com.oneightwo.schedule.database.time.Time
@@ -12,12 +14,32 @@ import io.reactivex.schedulers.Schedulers
 
 class ScheduleViewModel : ViewModel() {
 
-    var week = 1
-    var isSetting = false
     private var time = arrayListOf<Time>()
     private var subject = arrayListOf<Subject>()
     private var teacher = arrayListOf<Teacher>()
     private var cabinet = arrayListOf<Cabinet>()
+
+    private val settingFAB = MutableLiveData<Boolean>()
+    private val mainFAB = MutableLiveData<Boolean>()
+
+    init {
+        mainFAB.value = true
+        settingFAB.value = false
+    }
+
+    fun getStateMainFAB() = mainFAB
+
+    fun getStateSettingFAB() = settingFAB
+
+    fun changeStateMainFAB() {
+        mainFAB.value = !mainFAB.value!!
+    }
+
+    fun changeStateSettingFAB() {
+        settingFAB.value = !settingFAB.value!!
+    }
+
+
 
     fun getData(
         callback1: (List<Time>) -> Unit,
@@ -108,6 +130,15 @@ class ScheduleViewModel : ViewModel() {
                 cabinet.addAll(it)
                 callback(it)
             }
+    }
+
+    fun addDay(day: Schedule) {
+        val o = Observable.fromCallable {
+            App.db.scheduleDao().insertAll(day)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 
 }

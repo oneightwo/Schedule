@@ -1,14 +1,14 @@
 package com.oneightwo.schedule.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.oneightwo.schedule.alarm.AlarmFragment
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.schedule.ScheduleFragment
+import com.oneightwo.schedule.alarm.AlarmFragment
+import com.oneightwo.schedule.schedule.menu.ScheduleFragment
 import com.oneightwo.schedule.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 

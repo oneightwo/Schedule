@@ -36,7 +36,6 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                 android:spinnerMode="dropdown"
                 android:entries="@array/number_week_array"/>
 
