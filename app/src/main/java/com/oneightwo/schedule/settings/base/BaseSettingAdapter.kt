@@ -45,7 +45,6 @@ abstract class BaseSettingAdapter<T>(
         }
     }
 
-
     inner class BaseSettingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(position: Int) {
             with(itemView) {

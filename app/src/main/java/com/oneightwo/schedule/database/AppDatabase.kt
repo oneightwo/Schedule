@@ -16,7 +16,6 @@ import com.oneightwo.schedule.database.time.Time
 import com.oneightwo.schedule.database.time.TimeDao
 
 @Database(
-//    entities = [Subject::class, Time::class, Teacher::class, Cabinet::class],
     entities = [Subject::class, Time::class, Teacher::class, Cabinet::class, Schedule::class],
     version = 1
 )

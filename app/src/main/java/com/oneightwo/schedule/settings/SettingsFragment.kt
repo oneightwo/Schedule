@@ -17,7 +17,8 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ItemsViewPagerAdapter(context ?: return, childFragmentManager)
+        val adapter = ItemsViewPagerAdapter(childFragmentManager)
+//        val adapter = ItemsViewPagerAdapter(context ?: return, childFragmentManager)
         setting_vp.adapter = adapter
         setting_tl.setupWithViewPager(setting_vp)
     }

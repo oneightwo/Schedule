@@ -28,9 +28,11 @@ class ScheduleFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        schedule_vp.adapter =
-            DaysViewPagerAdapter(context ?: return, childFragmentManager)
+
+        val adapter = DaysViewPagerAdapter(context ?: return, childFragmentManager)
+        schedule_vp.adapter = adapter
         schedule_tl.setupWithViewPager(schedule_vp)
+
         initMainFAB()
         viewModel.getStateMainFAB().observe(this, Observer {
             clickMainFAB(it)
@@ -106,7 +108,8 @@ class ScheduleFragment : BaseFragment() {
                             time_s.selectedItem.toString(),
                             subject_s.selectedItem.toString(),
                             cabinet_s.selectedItem.toString(),
-                            teacher_s.selectedItem.toString()
+                            teacher_s.selectedItem.toString(),
+                            "l"
                         )
                     )
 

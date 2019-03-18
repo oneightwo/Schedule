@@ -44,6 +44,12 @@
         <item>Суббота</item>
     </string-array>
 
+    <string-array name="type_array">
+        <item>Практика</item>
+        <item>Лабораторная</item>
+        <item>Лекция</item>
+    </string-array>
+
     <string-array name="number_week_array">
         <item>1</item>
         <item>2</item>

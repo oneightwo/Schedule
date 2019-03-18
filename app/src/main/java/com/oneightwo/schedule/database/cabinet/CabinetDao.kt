@@ -7,6 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface CabinetDao {
+
     @Query("SELECT * FROM cabinet")
     fun getAll(): List<Cabinet>
 

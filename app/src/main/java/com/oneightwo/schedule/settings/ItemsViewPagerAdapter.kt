@@ -1,6 +1,5 @@
 package com.oneightwo.schedule.settings
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -11,7 +10,7 @@ import com.oneightwo.schedule.settings.fragment.TimeFragment
 
 
 class ItemsViewPagerAdapter(
-    private val context: Context,
+//    private val context: Context,
     fragmentManager: FragmentManager
 ) : FragmentStatePagerAdapter(fragmentManager) {
 

@@ -2,12 +2,12 @@ package com.oneightwo.schedule.database.schedule
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.oneightwo.schedule.base.BaseDao
 
 @Dao
-interface ScheduleDao {
+interface ScheduleDao: BaseDao<Schedule> {
 
     @Query("SELECT * FROM schedule")
     fun getAll(): LiveData<List<Schedule>>
@@ -28,7 +28,4 @@ interface ScheduleDao {
 
     @Insert
     fun insertAll(vararg schedules: Schedule)
-
-    @Delete
-    fun delete(schedule: Schedule)
 }

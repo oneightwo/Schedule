@@ -24,7 +24,10 @@ class DayAdapter : BaseAdapter<Schedule, DayAdapter.DataViewHolder>() {
         fun bind(position: Int) {
             with(itemView) {
                 subject_tv.text = getItemData(position).subject
+                time_tv.text = getItemData(position).time
+//                notifyDataSetChanged()
             }
+
         }
     }
 }

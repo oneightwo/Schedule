@@ -3,20 +3,26 @@ package com.oneightwo.schedule.schedule.menu
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.schedule.day.DayFragment
+import com.oneightwo.schedule.schedule.base.BaseDayFragment
 
 class DaysViewPagerAdapter(
     private val context: Context,
     fragmentManager: FragmentManager
-) : FragmentPagerAdapter(fragmentManager) {
+) : FragmentStatePagerAdapter(fragmentManager) {
 
-    override fun getItem(position: Int): Fragment {
-        return DayFragment.newInstance(position)
+    private val fragments = ArrayList<Fragment>().apply {
+        for (i in 0..5) {
+            add(BaseDayFragment.newInstance(i))
+        }
     }
 
-    override fun getCount() = 6
+    override fun getItem(position: Int): Fragment {
+        return fragments[position]
+    }
+
+    override fun getCount() = fragments.size
 
     override fun getPageTitle(position: Int): String = when (position) {
         0 -> context.getString(R.string.monday)

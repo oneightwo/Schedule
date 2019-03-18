@@ -39,8 +39,6 @@ class ScheduleViewModel : ViewModel() {
         settingFAB.value = !settingFAB.value!!
     }
 
-
-
     fun getData(
         callback1: (List<Time>) -> Unit,
         callback2: (List<Subject>) -> Unit,
