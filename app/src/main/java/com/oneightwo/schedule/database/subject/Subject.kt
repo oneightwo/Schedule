@@ -9,5 +9,5 @@ data class Subject(
     @PrimaryKey (autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "subject")
-    var subject: String?
+    var subject: String
 )

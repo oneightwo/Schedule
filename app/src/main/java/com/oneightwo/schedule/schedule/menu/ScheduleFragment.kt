@@ -3,7 +3,6 @@ package com.oneightwo.schedule.schedule.menu
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.oneightwo.schedule.R
@@ -43,29 +42,29 @@ class ScheduleFragment : BaseFragment() {
     }
 
     private fun initSpinners(view: View) {
-        viewModel.getData(
-            callback1 = {
-                val adapter =
-                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.time })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                view.time_s.adapter = adapter
-            }, callback2 = {
-                val adapter =
-                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.subject })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                view.subject_s.adapter = adapter
-            }, callback3 = {
-                val adapter =
-                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.teacher })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                view.teacher_s.adapter = adapter
-            }, callback4 = {
-                val adapter =
-                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.cabinet })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                view.cabinet_s.adapter = adapter
-            }
-        )
+//        viewModel.getData(
+//            callback1 = {
+//                val adapter =
+//                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.time })
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                view.time_s.adapter = adapter
+//            }, callback2 = {
+//                val adapter =
+//                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.subject })
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                view.subject_s.adapter = adapter
+//            }, callback3 = {
+//                val adapter =
+//                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.teacher })
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                view.teacher_s.adapter = adapter
+//            }, callback4 = {
+//                val adapter =
+//                    ArrayAdapter(context ?: return@getData, android.R.layout.simple_spinner_item, it.map { it.cabinet })
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                view.cabinet_s.adapter = adapter
+//            }
+//        )
 
 
     }

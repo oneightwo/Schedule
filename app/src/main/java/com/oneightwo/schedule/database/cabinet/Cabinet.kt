@@ -9,5 +9,5 @@ data class Cabinet(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "cabinet")
-    val cabinet: String?
+    val cabinet: String
 )

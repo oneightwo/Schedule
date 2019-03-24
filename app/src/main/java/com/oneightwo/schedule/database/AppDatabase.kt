@@ -19,7 +19,7 @@ import com.oneightwo.schedule.database.time.TimeDao
     entities = [Subject::class, Time::class, Teacher::class, Cabinet::class, Schedule::class],
     version = 1
 )
-abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase: RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
     abstract fun timeDao(): TimeDao
     abstract fun teacherDao(): TeacherDao
@@ -45,5 +45,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return instance!!
         }
+
     }
 }

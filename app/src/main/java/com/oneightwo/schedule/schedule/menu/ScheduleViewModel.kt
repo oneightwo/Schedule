@@ -92,16 +92,16 @@ class ScheduleViewModel : ViewModel() {
     }
 
     private fun getAllSubject(callback: (List<Subject>) -> Unit) {
-        val o = Observable.fromCallable {
-            App.db.subjectDao().getAll()
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                subject.clear()
-                subject.addAll(it)
-                callback(it)
-            }
+//        val o = Observable.fromCallable {
+//            App.db.subjectDao().getAll()
+//        }
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                subject.clear()
+//                subject.addAll(it)
+//                callback(it)
+//            }
     }
 
     private fun getAllTeacher(callback: (List<Teacher>) -> Unit) {
@@ -118,16 +118,16 @@ class ScheduleViewModel : ViewModel() {
     }
 
     private fun getAllCabinet(callback: (List<Cabinet>) -> Unit) {
-        val o = Observable.fromCallable {
-            App.db.cabinetDao().getAll()
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                cabinet.clear()
-                cabinet.addAll(it)
-                callback(it)
-            }
+//        val o = Observable.fromCallable {
+//            App.db.cabinetDao().getAll()
+//        }
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                cabinet.clear()
+//                cabinet.addAll(it)
+//                callback(it)
+//            }
     }
 
     fun addDay(day: Schedule) {

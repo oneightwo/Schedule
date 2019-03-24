@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.oneightwo.schedule.base.BaseDao
+import com.oneightwo.schedule.database.base.BaseDao
 
 @Dao
 interface ScheduleDao: BaseDao<Schedule> {

@@ -9,5 +9,5 @@ data class Teacher(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "teacher")
-    val teacher: String?
+    val teacher: String
 )

@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey
 data class Time(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    @ColumnInfo(name = "time")
-    val time: String?
+    @ColumnInfo(name = "first_time")
+    val firstTime: String,
+    @ColumnInfo(name = "second_time")
+    val secondTime: String
 )

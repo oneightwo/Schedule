@@ -4,9 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.oneightwo.schedule.settings.fragment.CabinetFragment
-import com.oneightwo.schedule.settings.fragment.SubjectFragment
-import com.oneightwo.schedule.settings.fragment.TeacherFragment
-import com.oneightwo.schedule.settings.fragment.TimeFragment
 
 
 class ItemsViewPagerAdapter(
@@ -15,10 +12,14 @@ class ItemsViewPagerAdapter(
 ) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val fragments = arrayListOf<Fragment>(
-        SubjectFragment.newInstance(),
-        TimeFragment.newInstance(),
+//        SubjectFragment.newInstance(),
+//        TimeFragment.newInstance(),
+//        CabinetFragment.newInstance(),
+//        TeacherFragment.newInstance()
         CabinetFragment.newInstance(),
-        TeacherFragment.newInstance()
+        CabinetFragment.newInstance(),
+        CabinetFragment.newInstance(),
+        CabinetFragment.newInstance()
     )
 
     override fun getItem(position: Int): Fragment {

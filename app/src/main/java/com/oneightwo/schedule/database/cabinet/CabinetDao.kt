@@ -1,30 +1,14 @@
 package com.oneightwo.schedule.database.cabinet
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
 import androidx.room.Query
+import com.oneightwo.schedule.database.base.BaseDao
 
 @Dao
-interface CabinetDao {
+abstract class CabinetDao : BaseDao<Cabinet> {
 
-    @Query("SELECT * FROM cabinet")
-    fun getAll(): List<Cabinet>
+    @Query("SELECT * FROM Cabinet")
+    abstract fun getAllData(): LiveData<List<Cabinet>>
 
-    @Query("SELECT * FROM cabinet WHERE id IN (:cabinetIds)")
-    fun loadAllByIds(cabinetIds: IntArray): List<Cabinet>
-
-    @Query("SELECT * FROM cabinet WHERE id = (:cabinetId)")
-    fun loadById(cabinetId: Int): Cabinet
-
-
-//    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(subject: String): Subject
-
-    @Insert
-    fun insertAll(vararg cabinets: Cabinet)
-
-    @Delete
-    fun delete(cabinets: Cabinet)
 }
