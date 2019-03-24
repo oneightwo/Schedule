@@ -44,6 +44,7 @@ class TimeFragment : BaseSettingFragment<Time>(1) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         modeFAB()
+        modeFAB()
         viewModel.getAll {
             initRecyclerView(it)
         }
