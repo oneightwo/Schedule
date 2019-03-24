@@ -7,18 +7,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.database.cabinet.Cabinet
+import com.oneightwo.schedule.database.cabinet.CabinetDao
 import com.oneightwo.schedule.settings.adapter.CabinetAdapter
 import com.oneightwo.schedule.settings.base.BaseSettingFragment
 import com.oneightwo.schedule.settings.viewModel.CabinetViewModel
 import kotlinx.android.synthetic.main.dialog_add.view.*
 
 
-class CabinetFragment : BaseSettingFragment<Cabinet>() {
+class CabinetFragment : BaseSettingFragment<Cabinet, CabinetDao>() {
 
     companion object {
         fun newInstance() = CabinetFragment()
     }
-
 
     override val viewModel by lazy {
         ViewModelProviders.of(this)

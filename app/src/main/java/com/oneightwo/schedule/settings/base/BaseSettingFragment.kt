@@ -2,11 +2,12 @@ package com.oneightwo.schedule.settings.base
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.base.BaseFragment
+import com.oneightwo.schedule.database.base.BaseDao
 import kotlinx.android.synthetic.main.fragment_item_setting.*
 
-abstract class BaseSettingFragment<T> : BaseFragment() {
+abstract class BaseSettingFragment<T, D : BaseDao<T>> : BaseFragment() {
 
-    abstract val viewModel: BaseViewModel<T>
+    abstract val viewModel: BaseViewModel<T, D>
     abstract val adapterItemSettings: BaseSettingAdapter<T>
 
     fun initFAB() {

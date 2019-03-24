@@ -4,7 +4,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
 
-interface BaseDao<T> {
+interface BaseDao<in T> {
     //
 //    @Insert
 //    fun insert(obj: T)
