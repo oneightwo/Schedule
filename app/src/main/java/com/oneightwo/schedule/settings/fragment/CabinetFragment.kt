@@ -1,5 +1,6 @@
 package com.oneightwo.schedule.settings.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
@@ -9,6 +10,7 @@ import com.oneightwo.schedule.database.cabinet.Cabinet
 import com.oneightwo.schedule.settings.adapter.CabinetAdapter
 import com.oneightwo.schedule.settings.base.BaseSettingFragment
 import com.oneightwo.schedule.settings.viewModel.CabinetViewModel
+import kotlinx.android.synthetic.main.dialog_add.view.*
 import kotlinx.android.synthetic.main.fragment_item_setting.*
 
 
@@ -46,6 +48,29 @@ class CabinetFragment : BaseSettingFragment<Cabinet>(2) {
         modeFAB()
         viewModel.getAll {
             initRecyclerView(it)
+        }
+    }
+
+    override fun clickAddFAB(add: (String) -> Unit) {
+        add_fab.setOnClickListener {
+            val view = layoutInflater.inflate(R.layout.dialog_add, null)
+            val dialog = AlertDialog.Builder(context)
+                .setView(view)
+                .create()
+            with(view) {
+                formatInput(view)
+                save_b.setOnClickListener {
+                    if (!add_data_et.text.isNullOrEmpty()) {
+
+                        add(add_data_et.text.toString())
+                        dialog.dismiss()
+                    }
+                }
+                cancel_b.setOnClickListener {
+                    dialog.dismiss()
+                }
+            }
+            dialog.show()
         }
     }
 

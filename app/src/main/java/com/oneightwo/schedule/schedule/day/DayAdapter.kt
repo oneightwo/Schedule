@@ -3,6 +3,9 @@ package com.oneightwo.schedule.schedule.day
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseAdapter
@@ -25,9 +28,31 @@ class DayAdapter : BaseAdapter<Schedule, DayAdapter.DataViewHolder>() {
             with(itemView) {
                 subject_tv.text = getItemData(position).subject
                 time_tv.text = getItemData(position).time
-//                notifyDataSetChanged()
+                cabinet_tv.text = getItemData(position).cabinet
+
+                full_arrow_down_iv.setOnClickListener {
+                    animate(full_arrow_down_iv, full_arrow_up_iv)
+                    full_ll.visibility = View.VISIBLE
+                }
             }
 
+        }
+
+        private fun animate(ivRotated: ImageView, ivShown: ImageView) {
+            val animation = AnimationUtils.loadAnimation(ivRotated.context, R.anim.rotate_arrow)
+            animation.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationRepeat(animation: Animation?) {
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    ivRotated.visibility = View.GONE
+                    ivShown.visibility = View.VISIBLE
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+                }
+            })
+            ivRotated.startAnimation(animation)
         }
     }
 }

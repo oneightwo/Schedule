@@ -104,6 +104,7 @@ class ScheduleFragment : BaseFragment() {
                         Schedule(
                             0,
                             week_s.selectedItem.toString().toInt(),
+//                            1,
                             day_s.selectedItemPosition,
                             time_s.selectedItem.toString(),
                             subject_s.selectedItem.toString(),
