@@ -1,5 +1,6 @@
 package com.oneightwo.schedule.settings.base
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.InputType.*
 import android.view.View
@@ -39,7 +40,68 @@ abstract class BaseSettingFragment<T> : BaseFragment() {
         set_subjects_rv.adapter = adapterItemSettings
     }
 
-    abstract fun initDialog(add: (T) -> Unit)
+    @Suppress("UNCHECKED_CAST")
+    private fun initDialog(add: (T) -> Unit) {
+        when {
+            viewModel.cls.isAssignableFrom(Time::class.java) -> {
+                val view = layoutInflater.inflate(R.layout.dialog_add_time, null)
+                val dialog = AlertDialog.Builder(context)
+                    .setView(view)
+                    .create()
+                formatInput(view)
+                with(view) {
+                    save_time_b.setOnClickListener {
+                        if (!add_first_time_et.text.isNullOrEmpty() && !add_second_time_et.text.isNullOrEmpty()) {
+                            add(Time(0, add_first_time_et.text.toString(), add_second_time_et.text.toString()) as T)
+                            dialog.dismiss()
+                        }
+                    }
+                    cancel_time_b.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
+                }
+            }
+            else -> {
+                val view = layoutInflater.inflate(R.layout.dialog_add, null)
+                val dialog = AlertDialog.Builder(context)
+                    .setView(view)
+                    .create()
+                formatInput(view)
+                with(view) {
+                    save_b.setOnClickListener {
+                        if (!add_data_et.text.isNullOrEmpty()) {
+                            when {
+                                viewModel.cls.isAssignableFrom(Subject::class.java) -> add(
+                                    Subject(
+                                        0,
+                                        add_data_et.text.toString()
+                                    ) as T
+                                )
+                                viewModel.cls.isAssignableFrom(Cabinet::class.java) -> add(
+                                    Cabinet(
+                                        0,
+                                        add_data_et.text.toString()
+                                    ) as T
+                                )
+                                viewModel.cls.isAssignableFrom(Teacher::class.java) -> add(
+                                    Teacher(
+                                        0,
+                                        add_data_et.text.toString()
+                                    ) as T
+                                )
+                            }
+                            dialog.dismiss()
+                        }
+                    }
+                    cancel_b.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
+                }
+            }
+        }
+    }
 
     private fun initObservers() {
         viewModel.data.observe(this, Observer {
@@ -70,7 +132,7 @@ abstract class BaseSettingFragment<T> : BaseFragment() {
         initObservers()
     }
 
-    fun formatInput(view: View) {
+    private fun formatInput(view: View) {
         viewModel.cls
         with(viewModel.cls) {
             when {
