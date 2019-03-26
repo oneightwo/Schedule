@@ -12,15 +12,15 @@ import com.oneightwo.schedule.schedule.day.DayViewModel
 import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.fragment_day.*
 
-class BaseDayFragment : BaseFragment() {
+class DayFragment : BaseFragment() {
 
     private val numberPage by lazy { arguments?.getInt(ARG_NUMBER) ?: 0 }
 
     companion object {
         const val ARG_NUMBER = "number"
 
-        fun newInstance(numberPage: Int): BaseDayFragment {
-            val fragment = BaseDayFragment()
+        fun newInstance(numberPage: Int): DayFragment {
+            val fragment = DayFragment()
             fragment.arguments = Bundle().apply {
                 putInt(ARG_NUMBER, numberPage)
             }

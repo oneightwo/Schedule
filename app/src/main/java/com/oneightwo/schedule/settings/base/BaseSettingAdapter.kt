@@ -9,13 +9,12 @@ import com.oneightwo.schedule.base.BaseAdapter
 import kotlinx.android.synthetic.main.item_settings.view.*
 
 abstract class BaseSettingAdapter<T>(
-//    private val addPosition: (Int, T) -> Unit,
-//    private val removePosition: (Int, T) -> Unit,
-//    private val getPositions: () -> ArrayList<Int>,
-//    private val setLongClick: (Boolean) -> Unit,
-//    private val isLongClick: () -> Boolean
-) :
-    BaseAdapter<T, BaseSettingAdapter<T>.BaseSettingsViewHolder>() {
+    private val addDataDeletions: (Int, T) -> Unit,
+    private val removeDataDeletions: (Int, T) -> Unit,
+    private val listDataDeletions: () -> ArrayList<FormDataSetting<T>>,
+    private val changeStateFAB: (Boolean) -> Unit,
+    private val stateFAB: () -> Boolean
+) : BaseAdapter<T, BaseSettingAdapter<T>.BaseSettingsViewHolder>() {
 
     abstract fun getText(item: T): String
 
@@ -30,18 +29,15 @@ abstract class BaseSettingAdapter<T>(
 
     private fun init(itemView: View, position: Int) {
         with(itemView) {
-            input_subject_tv.visibility = View.VISIBLE
-            input_subject_tv.text = getText(getItemData(position))
-//            if (!isLongClick()) {
-//                check_box_iv.visibility = View.GONE
-//            } else {
-//                check_box_iv.visibility = View.VISIBLE
-//                check_box_iv.setImageResource(R.drawable.ic_check_box_outline_blank_black_24dp)
-//                for (i in getPositions()) {
-//                    if (position == i)
-//                        check_box_iv.setImageResource(R.drawable.ic_check_box_black_24dp)
-//                }
-//            }
+            if (!stateFAB()) {
+                check_box_iv.visibility = View.VISIBLE
+                if (listDataDeletions().map { it.position }.contains(position))
+                    check_box_iv.setImageResource(R.drawable.ic_check_box_black_24dp)
+                else
+                    check_box_iv.setImageResource(R.drawable.ic_check_box_outline_blank_black_24dp)
+            } else {
+                check_box_iv.visibility = View.GONE
+            }
         }
     }
 
@@ -49,31 +45,26 @@ abstract class BaseSettingAdapter<T>(
         fun bind(position: Int) {
             with(itemView) {
                 init(itemView, position)
-
+                input_subject_tv.text = getText(getItemData(position))
                 item_rl.setOnLongClickListener {
-//                    setLongClick(true)
-                    notifyDataSetChanged()
-//                    addPosition(position, getItemData(position))
-                    check_box_iv.setImageResource(R.drawable.ic_check_box_black_24dp)
+                    if (stateFAB()) {
+                        changeStateFAB(false)
+                    }
                     return@setOnLongClickListener true
                 }
 
-//                if (isLongClick()) {
                 item_rl.setOnClickListener {
-//                    if (isLongClick()) {
-//                        if (getPositions().contains(position)) {
-//                            removePosition(position, getItemData(position))
-//                            check_box_iv.setImageResource(R.drawable.ic_check_box_outline_blank_black_24dp)
-//                            if (getPositions().isEmpty()) {
-//                                setLongClick(false)
-//                            }
-//                        } else {
-//                            addPosition(position, getItemData(position))
-//                            check_box_iv.setImageResource(R.drawable.ic_check_box_black_24dp)
-//
-//                        }
-//                        notifyDataSetChanged()
-//                    }
+                    if (!stateFAB()) {
+                        if (listDataDeletions().map { it.position }.contains(position)) {
+                            removeDataDeletions(position, getItemData(position))
+                        } else {
+                            addDataDeletions(position, getItemData(position))
+                            init(itemView, position)
+                        }
+                        if (listDataDeletions().isEmpty()) {
+                            changeStateFAB(true)
+                        }
+                    }
                 }
             }
         }

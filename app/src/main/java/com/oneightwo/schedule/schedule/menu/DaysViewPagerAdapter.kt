@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.schedule.base.BaseDayFragment
+import com.oneightwo.schedule.schedule.base.DayFragment
 
 class DaysViewPagerAdapter(
     private val context: Context,
@@ -14,7 +14,7 @@ class DaysViewPagerAdapter(
 
     private val fragments = ArrayList<Fragment>().apply {
         for (i in 0..5) {
-            add(BaseDayFragment.newInstance(i))
+            add(DayFragment.newInstance(i))
         }
     }
 

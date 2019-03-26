@@ -1,17 +1,18 @@
-//package com.oneightwo.schedule.settings.adapter
-//
-//import com.oneightwo.schedule.database.time.Time
-//import com.oneightwo.schedule.settings.base.BaseSettingAdapter
-//
-//class TimeAdapter(
-//    private val addPosition: (Int, Time) -> Unit,
-//    private val removePosition: (Int, Time) -> Unit,
-//    private val getPositions: () -> ArrayList<Int>,
-//    private val setLongClick: (Boolean) -> Unit,
-//    private val isLongClick: () -> Boolean
-//): BaseSettingAdapter<Time>(addPosition, removePosition, getPositions, setLongClick, isLongClick) {
-//
-//    override fun getText(item: Time): String {
-//        return item.time.toString()
-//    }
-//}
+package com.oneightwo.schedule.settings.adapter
+
+import com.oneightwo.schedule.database.time.Time
+import com.oneightwo.schedule.settings.base.BaseSettingAdapter
+import com.oneightwo.schedule.settings.base.FormDataSetting
+
+class TimeAdapter(
+    addDataDeletions: (Int, Time) -> Unit,
+    removeDataDeletions: (Int, Time) -> Unit,
+    listDataDeletions: () -> ArrayList<FormDataSetting<Time>>,
+    changeStateFAB: (Boolean) -> Unit,
+    stateFAB: () -> Boolean
+): BaseSettingAdapter<Time>(addDataDeletions, removeDataDeletions, listDataDeletions, changeStateFAB, stateFAB) {
+
+    override fun getText(item: Time): String {
+        return "${item.firstTime} - ${item.secondTime}"
+    }
+}
