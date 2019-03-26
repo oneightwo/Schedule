@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.schedule.base.DayFragment
+import com.oneightwo.schedule.schedule.day.DayFragment
 
 class DaysViewPagerAdapter(
     private val context: Context,

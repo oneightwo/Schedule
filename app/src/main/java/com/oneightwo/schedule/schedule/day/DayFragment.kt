@@ -1,4 +1,4 @@
-package com.oneightwo.schedule.schedule.base
+package com.oneightwo.schedule.schedule.day
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
-import com.oneightwo.schedule.schedule.day.DayAdapter
-import com.oneightwo.schedule.schedule.day.DayViewModel
 import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.fragment_day.*
 
@@ -36,13 +34,18 @@ class DayFragment : BaseFragment() {
             .get(DayViewModel::class.java)
     }
 
+    private fun initObservers() {
+        viewModel.day.observe(this, Observer { data ->
+            adapterDay.update(data.filter { it.day == numberPage })
+        })
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.numberPage = numberPage
         initRecyclerView()
-        viewModel.day.observe(this, Observer { data ->
-            adapterDay.update(data.filter { it.day == numberPage })
-        })
+        initObservers()
     }
 
     override fun getLayoutId() = R.layout.fragment_day

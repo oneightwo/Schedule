@@ -10,6 +10,6 @@ class DayViewModel : ViewModel() {
     var numberPage: Int? = null
     val data = arrayListOf<Schedule>()
 
-    val day: LiveData<List<Schedule>> = App.db.scheduleDao().getAll()
+    val day: LiveData<List<Schedule>> = App.db.scheduleDao().getAllData()
 
 }
