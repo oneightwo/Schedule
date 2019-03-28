@@ -29,11 +29,6 @@ class DayAdapter : BaseAdapter<Schedule, DayAdapter.DataViewHolder>() {
                 subject_tv.text = getItemData(position).subject
                 time_tv.text = getItemData(position).time
                 cabinet_tv.text = getItemData(position).cabinet
-
-                full_arrow_down_iv.setOnClickListener {
-                    animate(full_arrow_down_iv, full_arrow_up_iv)
-                    full_ll.visibility = View.VISIBLE
-                }
             }
 
         }

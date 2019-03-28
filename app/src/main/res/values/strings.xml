@@ -19,8 +19,9 @@
     <string name="teacher">Преподаватель</string>
     <string name="cabinet">Кабинет</string>
 
-    <string name="save">Сохранить</string>
+
     <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
 
     <string name="example_subject">Пример: Высшая математика</string>
     <string name="example_time">Пример: 8:00–9:45</string>

@@ -4,7 +4,7 @@
     <item
             android:id="@+id/action_schedules"
             android:enabled="true"
-            android:icon="@drawable/ic_shedule_24dp"
+            android:icon="@drawable/ic_schedule_24dp"
             android:title="@string/schedule"
             app:showAsAction="ifRoom"/>
     <item

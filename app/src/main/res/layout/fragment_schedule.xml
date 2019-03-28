@@ -31,17 +31,17 @@
             android:orientation="vertical">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/setting_fab"
+                android:id="@+id/add_fab"
                 style="@style/Widget.MaterialComponents.FloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings_white_24dp"
+                android:src="@drawable/ic_add_white_24dp"
                 android:layout_gravity="center_horizontal"
                 rfab:fabSize="mini"
                 android:visibility="invisible"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/main_fab"
+                android:id="@+id/week_fab"
                 style="@style/Widget.MaterialComponents.FloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

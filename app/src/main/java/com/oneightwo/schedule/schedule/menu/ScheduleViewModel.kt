@@ -5,25 +5,26 @@ import androidx.lifecycle.ViewModel
 
 class ScheduleViewModel : ViewModel() {
 
-    private val settingFAB = MutableLiveData<Boolean>()
-    private val mainFAB = MutableLiveData<Boolean>()
+    private val addFAB = MutableLiveData<Boolean>()
+    private val weekFAB = MutableLiveData<Boolean>()
 
     init {
-        mainFAB.value = true
-        settingFAB.value = false
+        weekFAB.value = true
+        addFAB.value = false
     }
 
-    fun getStateMainFAB() = mainFAB
+    fun getStateWeekFAB() = weekFAB
 
-    fun getStateSettingFAB() = settingFAB
+    fun getStateAddFAB() = addFAB
 
-    fun changeStateMainFAB() {
-        mainFAB.value = !mainFAB.value!!
+    fun changeStateWeekFAB() {
+        weekFAB.value = !weekFAB.value!!
     }
 
-    fun changeStateSettingFAB() {
-        settingFAB.value = !settingFAB.value!!
+    fun changeStateAddFAB() {
+        addFAB.value = !addFAB.value!!
     }
+
 
 
 }
