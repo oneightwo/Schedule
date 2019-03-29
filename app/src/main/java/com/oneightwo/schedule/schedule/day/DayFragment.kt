@@ -36,7 +36,7 @@ class DayFragment : BaseFragment() {
 
     private fun initObservers() {
         viewModel.day.observe(this, Observer { data ->
-            adapterDay.update(data.filter { it.day == numberPage })
+//            adapterDay.update(data.filter { it.day == numberPage })
         })
 
     }

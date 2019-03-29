@@ -5,23 +5,29 @@
               android:layout_height="wrap_content">
 
     <RelativeLayout
+            android:id="@+id/item_hint_rl"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:orientation="horizontal">
 
+
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/hint_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@id/delete_hint_iv"
                 android:textSize="16sp"
+                android:gravity="center_vertical"
                 android:layout_marginStart="16dp"
                 android:layout_centerVertical="true"
                 android:text="@string/subject"/>
 
         <ImageView
+                android:id="@+id/delete_hint_iv"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="12dp"
                 android:layout_alignParentEnd="true"

@@ -11,15 +11,17 @@ data class Schedule (
     @ColumnInfo(name = "week")
     val week: Int,
     @ColumnInfo(name = "day")
-    val day: Int,
-    @ColumnInfo(name = "time")
-    val time: String,
+    val day: String,
+    @ColumnInfo(name = "first_time")
+    val firstTime: String?,
+    @ColumnInfo(name = "second_time")
+    val secondTime: String?,
     @ColumnInfo(name = "subject")
     val subject: String,
     @ColumnInfo(name = "cabinet")
-    val cabinet: String,
+    val cabinet: String?,
     @ColumnInfo(name = "teacher")
-    val teacher: String,
+    val teacher: String?,
     @ColumnInfo(name = "type")
-    val type: String
+    val type: String?
 )

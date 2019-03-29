@@ -10,22 +10,18 @@ import kotlinx.android.synthetic.main.item_menu_add.view.*
 
 class MenuAddAdapter(
     private val clicked: (Int) -> Unit
-) : BaseAdapter<ItemMenuAdd, MenuAddAdapter.MenuAddViewHolder>() {
+) : BaseAdapter<String, MenuAddAdapter.MenuAddViewHolder>() {
 
-    init {
-        val itemData =
-            listOf<ItemMenuAdd>(
-                ItemMenuAdd("День недели", R.drawable.ic_today_black_24dp),
-                ItemMenuAdd("Четная/Нечетная неделя", R.drawable.ic_sync_black_24dp),
-                ItemMenuAdd("Начало занятия", R.drawable.ic_access_time_black_24dp),
-                ItemMenuAdd("Конец занятия", R.drawable.ic_access_time_black_24dp),
-                ItemMenuAdd("Предмет", R.drawable.ic_subject_black_24dp),
-                ItemMenuAdd("Кабинет", R.drawable.ic_school_black_24dp),
-                ItemMenuAdd("Преподаватель", R.drawable.ic_person_black_24dp),
-                ItemMenuAdd("Тип занятия", R.drawable.ic_import_contacts_black_24dp)
-            )
-        add(itemData)
-    }
+    private val listIcon = arrayOf<Int>(
+        R.drawable.ic_today_black_24dp,
+        R.drawable.ic_sync_black_24dp,
+        R.drawable.ic_access_time_black_24dp,
+        R.drawable.ic_access_time_black_24dp,
+        R.drawable.ic_subject_black_24dp,
+        R.drawable.ic_school_black_24dp,
+        R.drawable.ic_person_black_24dp,
+        R.drawable.ic_import_contacts_black_24dp
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuAddViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_menu_add, parent, false)
@@ -36,13 +32,12 @@ class MenuAddAdapter(
         holder.bind(position)
     }
 
-
     inner class MenuAddViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(position: Int) {
 
             with(itemView) {
-                item_menu_add_tv.text = getItemData(position).text
-                icon_iv.setImageResource(getItemData(position).resId)
+                item_menu_add_tv.text = getItemData(position)
+                icon_iv.setImageResource(listIcon[position])
 
                 item_ll.setOnClickListener {
                     clicked(position)

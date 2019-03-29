@@ -1,84 +1,101 @@
 package com.oneightwo.schedule.menu_аdd.dialog
 
-import android.app.AlertDialog
+import android.content.pm.ActivityInfo
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.menu_аdd.MenuAddActivity
+import com.oneightwo.schedule.menu_аdd.dialog.adapter.AddDialogAdapter
+import com.oneightwo.schedule.menu_аdd.dialog.adapter.AddListDialogAdapter
 import kotlinx.android.synthetic.main.dialog_day_of_week.view.*
 
 
 class AddDialog(
-    private val context: MenuAddActivity
-//    private val getData: (Int) -> List<String>
-) {
+    private val context: MenuAddActivity,
+    private val getData: (Int) -> List<String>,
+    private val setData: (String) -> Unit,
+    private val deleteData: (Int) -> Unit,
+    private val position: Int
+) : androidx.appcompat.app.AlertDialog(context) {
 
-    private val adapterAddDialog by lazy {
-        AddDialogAdapter()
+    private val adapterDialog by lazy {
+        when (position) {
+            0, 1, 7 -> AddListDialogAdapter(
+                setData
+
+            )
+            else -> AddDialogAdapter(
+                setData,
+                deleteData
+            )
+        }
     }
 
-    private val view by lazy {
-        context.layoutInflater.inflate(R.layout.dialog_day_of_week, null)
+    private var dialog: View? = null
+
+    init {
+        when (position) {
+            0, 1, 7 -> {
+                val view = context.layoutInflater.inflate(R.layout.dialog_add_list, null)
+                with(view) {
+                    initRecyclerView(view)
+                    adapterDialog.add(
+                        getData(position)
+                    )
+
+                }
+                setOnDismissListener {
+                    orientation(false)
+                }
+                setView(view)
+                dialog = view
+            }
+            else -> {
+                val view = context.layoutInflater.inflate(R.layout.dialog_day_of_week, null)
+                with(view) {
+                    initRecyclerView(view)
+                    adapterDialog.add(
+                        getData(position)
+                    )
+                    save_b.setOnClickListener {
+                        if (!add_data_et.text.isNullOrEmpty()) {
+                            setData(add_data_et.text.toString())
+                        }
+                        dismiss()
+                    }
+                    cancel_b.setOnClickListener {
+                        dismiss()
+                    }
+                }
+                setOnDismissListener {
+                    orientation(false)
+                }
+                setView(view)
+            }
+        }
+
     }
 
-    private val dialog by lazy {
-        AlertDialog.Builder(context)
-            .setView(view)
-            .create()
-    }
-
-    private fun initAdapterAddDialog() {
+    private fun initRecyclerView(view: View) {
         with(view) {
             hint_rv.layoutManager = LinearLayoutManager(context)
-            hint_rv.adapter = adapterAddDialog
+            hint_rv.adapter = adapterDialog
         }
     }
 
-//    fun initDialog(position: Int) {
-//        when (position) {
-//            0 ->
-//                1
-//            ->
-//                2
-//            ->
-//                3
-//            ->
-//                4
-//            ->
-//                5
-//            ->
-//                6
-//            ->
-//                7
-//            ->
-//            else ->
-//        }
-//    }
 
-    fun show() {
-        with(view) {
-            initAdapterAddDialog()
-            adapterAddDialog.add(
-                arrayListOf(
-                    "Математика",
-                    "Русский",
-                    "Ино",
-                    "БД",
-                    "Технология программирования",
-                    "3Д моделирование",
-                    "Физкультура",
-                    "Введение в Qt"
-                )
-            )
-            save_b.setOnClickListener {
-                //                if (!add_first_time_et.text.isNullOrEmpty() && !add_second_time_et.text.isNullOrEmpty()) {
 
-                dialog.dismiss()
-//                }
-            }
-            cancel_b.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.show()
+    private fun orientation(block: Boolean) {
+        context.requestedOrientation = if (block) {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_SENSOR
         }
     }
+
+    override fun show() {
+        orientation(true)
+        super.show()
+    }
+
 }
