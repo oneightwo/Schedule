@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.oneightwo.schedule.database.cabinet.Cabinet
 import com.oneightwo.schedule.database.subject.Subject
 import com.oneightwo.schedule.database.teacher.Teacher
-import com.oneightwo.schedule.database.time.Time
+import com.oneightwo.schedule.database.time.TimeEnd
+import com.oneightwo.schedule.database.time.TimeStart
 import com.oneightwo.schedule.tools.App
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -51,7 +52,7 @@ abstract class BaseSettingViewModel<T> : ViewModel() {
             with(cls) {
                 when {
                     isAssignableFrom(Cabinet::class.java) -> App.db.cabinetDao().insert(data as Cabinet)
-                    isAssignableFrom(Time::class.java) -> App.db.timeDao().insert(data as Time)
+                    isAssignableFrom(TimeEnd::class.java) -> App.db.timeStartDao().insert(data as TimeStart)
                     isAssignableFrom(Teacher::class.java) -> App.db.teacherDao().insert(data as Teacher)
                     isAssignableFrom(Subject::class.java) -> App.db.subjectDao().insert(data as Subject)
                 }
@@ -68,7 +69,7 @@ abstract class BaseSettingViewModel<T> : ViewModel() {
                 with(cls) {
                     when {
                         isAssignableFrom(Cabinet::class.java) -> App.db.cabinetDao().delete(i.data as Cabinet)
-                        isAssignableFrom(Time::class.java) -> App.db.timeDao().delete(i.data as Time)
+                        isAssignableFrom(TimeEnd::class.java) -> App.db.timeStartDao().delete(i.data as TimeStart)
                         isAssignableFrom(Teacher::class.java) -> App.db.teacherDao().delete(i.data as Teacher)
                         isAssignableFrom(Subject::class.java) -> App.db.subjectDao().delete(i.data as Subject)
                     }
@@ -87,7 +88,7 @@ abstract class BaseSettingViewModel<T> : ViewModel() {
             with(cls) {
                 when {
                     isAssignableFrom(Cabinet::class.java) -> App.db.cabinetDao().update(data as Cabinet)
-                    isAssignableFrom(Time::class.java) -> App.db.timeDao().update(data as Time)
+                    isAssignableFrom(TimeEnd::class.java) -> App.db.timeStartDao().update(data as TimeStart)
                     isAssignableFrom(Teacher::class.java) -> App.db.teacherDao().update(data as Teacher)
                     isAssignableFrom(Subject::class.java) -> App.db.subjectDao().update(data as Subject)
                 }

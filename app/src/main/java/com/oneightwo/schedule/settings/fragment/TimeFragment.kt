@@ -2,12 +2,12 @@ package com.oneightwo.schedule.settings.fragment
 
 import androidx.lifecycle.ViewModelProviders
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.database.time.Time
+import com.oneightwo.schedule.database.time.TimeStart
 import com.oneightwo.schedule.settings.adapter.TimeAdapter
 import com.oneightwo.schedule.settings.base.BaseSettingFragment
 import com.oneightwo.schedule.settings.viewModel.TimeViewModel
 
-class TimeFragment : BaseSettingFragment<Time>() {
+class TimeFragment : BaseSettingFragment<TimeStart>() {
 
     companion object {
         fun newInstance() = TimeFragment()

@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_dialog_add.view.*
 
 class AddDialogAdapter(
     private val setData: (String) -> Unit,
-    private val deleteData: (Int) -> Unit
+    private val deleteData: (String) -> Unit
 ) : BaseAdapter<String, AddDialogAdapter.AddDialogViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddDialogViewHolder {
@@ -32,7 +32,7 @@ class AddDialogAdapter(
                 }
 
                 delete_hint_iv.setOnClickListener {
-                    deleteData(position)
+                    deleteData(getItemData(position))
                 }
             }
         }

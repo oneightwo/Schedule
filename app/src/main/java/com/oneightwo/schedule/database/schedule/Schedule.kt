@@ -9,13 +9,13 @@ data class Schedule (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "week")
-    val week: Int,
+    val week: String,
     @ColumnInfo(name = "day")
     val day: String,
     @ColumnInfo(name = "first_time")
-    val firstTime: String?,
+    val firstTime: String,
     @ColumnInfo(name = "second_time")
-    val secondTime: String?,
+    val secondTime: String,
     @ColumnInfo(name = "subject")
     val subject: String,
     @ColumnInfo(name = "cabinet")

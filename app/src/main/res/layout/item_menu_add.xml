@@ -9,7 +9,8 @@
             android:id="@+id/item_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="?android:selectableItemBackground">
 
         <ImageView
                 android:id="@+id/icon_iv"
@@ -23,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:padding="16dp"
                 android:textSize="16sp"
+                android:textColor="@color/colorGray"
                 android:text="@string/new_record"
                 android:layout_height="56dp"/>
 

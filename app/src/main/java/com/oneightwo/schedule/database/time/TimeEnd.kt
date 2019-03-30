@@ -5,11 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Time(
+data class TimeEnd(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    @ColumnInfo(name = "first_time")
-    val firstTime: String,
-    @ColumnInfo(name = "second_time")
-    val secondTime: String
+    @ColumnInfo(name = "time")
+    val time: String
 )

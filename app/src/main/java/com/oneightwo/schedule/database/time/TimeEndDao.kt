@@ -6,9 +6,9 @@ import androidx.room.Query
 import com.oneightwo.schedule.database.base.BaseDao
 
 @Dao
-abstract class TimeDao : BaseDao<Time>{
+abstract class TimeEndDao : BaseDao<TimeEnd>{
 
-    @Query("SELECT * FROM time")
-    abstract fun getAllData(): LiveData<List<Time>>
+    @Query("SELECT * FROM TimeEnd")
+    abstract fun getAllData(): LiveData<List<TimeEnd>>
 
 }

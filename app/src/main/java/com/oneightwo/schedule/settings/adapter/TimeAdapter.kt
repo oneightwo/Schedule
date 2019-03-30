@@ -1,18 +1,18 @@
 package com.oneightwo.schedule.settings.adapter
 
-import com.oneightwo.schedule.database.time.Time
+import com.oneightwo.schedule.database.time.TimeStart
 import com.oneightwo.schedule.settings.base.BaseSettingAdapter
 import com.oneightwo.schedule.settings.base.FormDataSetting
 
 class TimeAdapter(
-    addDataDeletions: (Int, Time) -> Unit,
-    removeDataDeletions: (Int, Time) -> Unit,
-    listDataDeletions: () -> ArrayList<FormDataSetting<Time>>,
+    addDataDeletions: (Int, TimeStart) -> Unit,
+    removeDataDeletions: (Int, TimeStart) -> Unit,
+    listDataDeletions: () -> ArrayList<FormDataSetting<TimeStart>>,
     changeStateFAB: (Boolean) -> Unit,
     stateFAB: () -> Boolean
-): BaseSettingAdapter<Time>(addDataDeletions, removeDataDeletions, listDataDeletions, changeStateFAB, stateFAB) {
+): BaseSettingAdapter<TimeStart>(addDataDeletions, removeDataDeletions, listDataDeletions, changeStateFAB, stateFAB) {
 
-    override fun getText(item: Time): String {
-        return "${item.firstTime} - ${item.secondTime}"
+    override fun getText(item: TimeStart): String {
+        return "${item.time}"
     }
 }

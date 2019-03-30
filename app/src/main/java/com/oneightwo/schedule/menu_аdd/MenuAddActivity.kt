@@ -1,13 +1,13 @@
 package com.oneightwo.schedule.menu_аdd
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.menu_аdd.dialog.AddDialog
+import com.oneightwo.schedule.menu_аdd.dialog.DialogManager
 import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.activity_menu_add.*
 
@@ -40,28 +40,49 @@ class MenuAddActivity : AppCompatActivity() {
 
     private fun initDoneFAB() {
         done_fab.setOnClickListener {
+            val data = viewModel.getTemporaryStorage().value!!
+            if (data[0] != null && data[1] != null && data[2] != null && data[3] != null && data[4] != null) {
+                viewModel.insert()
+                adapterMenu.update(itemData.map { it.value })
+                Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Заполните обязательные поля", Toast.LENGTH_SHORT).show()
+            }
 
+//            finish()
         }
     }
 
-    private lateinit var dialog: AlertDialog
+    private var dialog: DialogManager? = null
 
     private fun clickedItemMenu(position: Int) {
         viewModel.position = position
-        dialog = AddDialog(this, viewModel::getData, viewModel::setData, viewModel::deleteData, viewModel.position!!)
-        dialog.show()
+        dialog =
+            DialogManager(this, viewModel::getData, viewModel::setData, viewModel::deleteData, viewModel.position!!)
+        dialog?.show()
     }
 
     private fun initObserver() {
         with(viewModel) {
-            getTime().observe(this@MenuAddActivity, Observer { })
-            getTeacher().observe(this@MenuAddActivity, Observer { })
-            getSubject().observe(this@MenuAddActivity, Observer { })
-            getCabinet().observe(this@MenuAddActivity, Observer { })
+            getStartTime().observe(this@MenuAddActivity, Observer {
+                dialog?.update()
+            })
+            getEndTime().observe(this@MenuAddActivity, Observer {
+                dialog?.update()
+            })
+            getTeacher().observe(this@MenuAddActivity, Observer {
+                dialog?.update()
+            })
+            getSubject().observe(this@MenuAddActivity, Observer {
+                dialog?.update()
+            })
+            getCabinet().observe(this@MenuAddActivity, Observer {
+                dialog?.update()
+            })
 
             getTemporaryStorage().observe(this@MenuAddActivity, Observer {
                 log("!!!!! $it")
-                if (it.isNotEmpty()) dialog.dismiss()
+                if (it.isNotEmpty() && dialog != null) dialog?.dismiss()
                 val list: MutableMap<Int, String> = itemData.toMutableMap()
                 for (i in it.keys) {
                     list[i] = it[i]!!
@@ -85,9 +106,9 @@ class MenuAddActivity : AppCompatActivity() {
     companion object {
 
         val itemData =
-            mapOf<Int, String>(
-                0 to "День недели",
-                1 to "Четная/Нечетная неделя",
+            mapOf(
+                0 to "Четная/Нечетная неделя",
+                1 to "День недели",
                 2 to "Начало занятия",
                 3 to "Конец занятия",
                 4 to "Предмет",

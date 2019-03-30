@@ -1,5 +1,6 @@
 package com.oneightwo.schedule.menu_аdd
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,8 @@ class MenuAddAdapter(
 ) : BaseAdapter<String, MenuAddAdapter.MenuAddViewHolder>() {
 
     private val listIcon = arrayOf<Int>(
-        R.drawable.ic_today_black_24dp,
         R.drawable.ic_sync_black_24dp,
+        R.drawable.ic_today_black_24dp,
         R.drawable.ic_access_time_black_24dp,
         R.drawable.ic_access_time_black_24dp,
         R.drawable.ic_subject_black_24dp,
@@ -22,6 +23,18 @@ class MenuAddAdapter(
         R.drawable.ic_person_black_24dp,
         R.drawable.ic_import_contacts_black_24dp
     )
+
+    private val itemData =
+        arrayListOf<String>(
+            "Четная/Нечетная неделя",
+            "День недели",
+            "Начало занятия",
+            "Конец занятия",
+            "Предмет",
+            "Кабинет",
+            "Преподаватель",
+            "Тип занятия"
+        )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuAddViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_menu_add, parent, false)
@@ -37,6 +50,12 @@ class MenuAddAdapter(
 
             with(itemView) {
                 item_menu_add_tv.text = getItemData(position)
+                if (!itemData[position].equals(getItemData(position))) {
+                    item_menu_add_tv.setTextColor(Color.BLACK)
+                } else {
+                    item_menu_add_tv.setTextColor(resources.getColor(R.color.colorGray))
+                }
+
                 icon_iv.setImageResource(listIcon[position])
 
                 item_ll.setOnClickListener {

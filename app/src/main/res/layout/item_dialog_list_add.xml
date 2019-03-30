@@ -8,6 +8,7 @@
             android:id="@+id/item_hint_rl"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
             android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -16,6 +17,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
+                android:textColor="@color/colorBlack"
                 android:layout_centerVertical="true"
                 android:text="@string/subject"/>
     </RelativeLayout>

@@ -11,7 +11,7 @@ import com.oneightwo.schedule.base.BaseFragment
 import com.oneightwo.schedule.database.cabinet.Cabinet
 import com.oneightwo.schedule.database.subject.Subject
 import com.oneightwo.schedule.database.teacher.Teacher
-import com.oneightwo.schedule.database.time.Time
+import com.oneightwo.schedule.database.time.TimeEnd
 import kotlinx.android.synthetic.main.dialog_add.view.*
 import kotlinx.android.synthetic.main.dialog_add_time.view.*
 import kotlinx.android.synthetic.main.fragment_item_setting.*
@@ -43,7 +43,7 @@ abstract class BaseSettingFragment<T> : BaseFragment() {
     @Suppress("UNCHECKED_CAST")
     private fun initDialog(add: (T) -> Unit) {
         when {
-            viewModel.cls.isAssignableFrom(Time::class.java) -> {
+            viewModel.cls.isAssignableFrom(TimeEnd::class.java) -> {
                 val view = layoutInflater.inflate(R.layout.dialog_add_time, null)
                 val dialog = AlertDialog.Builder(context)
                     .setView(view)
@@ -52,7 +52,7 @@ abstract class BaseSettingFragment<T> : BaseFragment() {
                 with(view) {
                     save_time_b.setOnClickListener {
                         if (!add_first_time_et.text.isNullOrEmpty() && !add_second_time_et.text.isNullOrEmpty()) {
-                            add(Time(0, add_first_time_et.text.toString(), add_second_time_et.text.toString()) as T)
+                            add(TimeEnd(0, add_first_time_et.text.toString()) as T)
                             dialog.dismiss()
                         }
                     }
@@ -140,7 +140,7 @@ abstract class BaseSettingFragment<T> : BaseFragment() {
                     view.add_hint_data_tv.hint = context?.getString(R.string.example_cabinet)
                     view.add_data_et.inputType = TYPE_CLASS_TEXT + TYPE_TEXT_FLAG_CAP_SENTENCES
                 }
-                isAssignableFrom(Time::class.java) -> {
+                isAssignableFrom(TimeEnd::class.java) -> {
                     view.add_first_time_et.inputType = TYPE_CLASS_DATETIME
                     view.add_second_time_et.inputType = TYPE_CLASS_DATETIME
                 }
