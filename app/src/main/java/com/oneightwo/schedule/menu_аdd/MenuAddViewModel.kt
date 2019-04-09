@@ -9,8 +9,8 @@ import com.oneightwo.schedule.database.subject.Subject
 import com.oneightwo.schedule.database.teacher.Teacher
 import com.oneightwo.schedule.database.time.TimeEnd
 import com.oneightwo.schedule.database.time.TimeStart
-import com.oneightwo.schedule.tools.App
-import com.oneightwo.schedule.tools.log
+import com.oneightwo.schedule.menu_аdd.dialog.TemporaryStorage
+import com.oneightwo.schedule.tools.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,7 +20,7 @@ class MenuAddViewModel : ViewModel() {
     private val liveData: LiveData<List<Schedule>> = App.db.scheduleDao().getAllData()
     private val storageData: Schedule? = null
 
-    private var temporaryStorage = MutableLiveData<MutableMap<Int, String>>()
+    private var temporaryStorage = MutableLiveData<TemporaryStorage>()
 
     private val timeStartDao = App.db.timeStartDao()
     private val timeEndDao = App.db.timeEndDao()
@@ -34,18 +34,32 @@ class MenuAddViewModel : ViewModel() {
     private val teacher = teacherDao.getAllData()
     private val subject = subjectDao.getAllData()
     private val cabinet = cabinetDao.getAllData()
-    var isActiveDialog = false
 
+    var isActiveDialog = false
+    var isFilledMain = true
     var position: Int? = null
 
-
     init {
-        temporaryStorage.value = mutableMapOf()
+        temporaryStorage.value = TemporaryStorage()
     }
 
     fun setData(data: String) {
-        log("$position $data")
-        temporaryStorage.value = temporaryStorage.value?.apply { put(position!!, data) }
+        log("setData = $data")
+//        temporaryStorageList = temporaryStorage.value?.get() ?: listOf()
+        isActiveDialog = false
+        with(temporaryStorage) {
+            when (position) {
+                0 -> value = value.apply { value?.week = data }
+                1 -> value = value.apply { value?.day = data }
+                2 -> value = value.apply { value?.timeStart = data }
+                3 -> value = value.apply { value?.timeEnd = data }
+                4 -> value = value.apply { value?.subject = data }
+                5 -> value = value.apply { value?.cabinet = data }
+                6 -> value = value.apply { value?.teacher = data }
+                7 -> value = value.apply { value?.type = data }
+                else -> ""
+            }
+        }
     }
 
 
@@ -65,7 +79,6 @@ class MenuAddViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
-
     }
 
     fun getStartTime() = timeStart
@@ -90,34 +103,31 @@ class MenuAddViewModel : ViewModel() {
         val o = Observable.fromCallable {
             val data = temporaryStorage.value
 
-            if (data?.get(2) != null && data[3] != null) {
-                timeStartDao.insert(TimeStart(0, data[2]!!))
-                timeEndDao.insert(TimeEnd(0, data[3]!!))
-            }
-            if (data?.get(6) != null) teacherDao.insert(Teacher(0, data[6]!!))
-            if (data?.get(5) != null) cabinetDao.insert(Cabinet(0, data[5]!!))
-            if (data?.get(4) != null) subjectDao.insert(Subject(0, data[4]!!))
-            if (data?.get(0) != null && data[1] != null && data[2] != null && data[3] != null && data[4] != null) {
-                log("ADD_DB_SCHEDULE")
-                scheduleDao.insert(
-                    Schedule(
-                        id = 0,
-                        week = data[0]!!,
-                        day = data[1]!!,
-                        firstTime = data[2]!!,
-                        secondTime = data[3]!!,
-                        subject = data[4]!!,
-                        cabinet = data[5],
-                        teacher = data[6],
-                        type = data[7]
-                    )
+            if (data?.teacher != null) teacherDao.insert(Teacher(0, data.teacher!!))
+            if (data?.cabinet != null) cabinetDao.insert(Cabinet(0, data.cabinet!!))
+            subjectDao.insert(Subject(0, data?.subject!!))
+            timeStartDao.insert(TimeStart(0, data.timeStart!!))
+            timeEndDao.insert(TimeEnd(0, data.timeEnd!!))
+
+            log("ADD_DB_SCHEDULE")
+            scheduleDao.insert(
+                Schedule(
+                    id = 0,
+                    week = TYPE_WEEK.indexOf(data.week) + 1,
+                    day = DAY_OF_WEEK.indexOf(data.day),
+                    firstTime = data.timeStart!!,
+                    secondTime = data.timeEnd!!,
+                    subject = data.subject!!,
+                    cabinet = data.cabinet,
+                    teacher = data.teacher,
+                    type = TYPE_LESSON.indexOf(data.type)
                 )
-            }
+            )
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                temporaryStorage.value = mutableMapOf()
+            .subscribe{
+                temporaryStorage.value = TemporaryStorage()
             }
     }
 

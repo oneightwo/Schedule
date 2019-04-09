@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.menu_аdd.dialog.DialogManager
+import com.oneightwo.schedule.menu_аdd.dialog.adapter.MenuAddAdapter
+import com.oneightwo.schedule.tools.ITEM_ADD_MENU
 import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.activity_menu_add.*
 
@@ -25,6 +27,8 @@ class MenuAddActivity : AppCompatActivity() {
         ViewModelProviders.of(this)
             .get(MenuAddViewModel::class.java)
     }
+
+    private var dialog: DialogManager? = null
 
     private fun initToolbar() {
         setSupportActionBar(menu_add_tb)
@@ -42,12 +46,17 @@ class MenuAddActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val data = viewModel.getTemporaryStorage().value!!
-        if (data[0] != null && data[1] != null && data[2] != null && data[3] != null && data[4] != null) {
-            viewModel.insert()
-            adapterMenu.update(itemData.map { it.value })
-            Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show()
-        } else {
+        if (!data.isFilledMain()) {
+            viewModel.isFilledMain = false
+            adapterMenu.isFilledMain = false
+            adapterMenu.update(data.get())
             Toast.makeText(this, "Заполните обязательные поля", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.insert()
+            viewModel.isFilledMain = true
+            adapterMenu.isFilledMain = true
+            adapterMenu.update(ITEM_ADD_MENU)
+            Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show()
         }
         return true
     }
@@ -55,13 +64,11 @@ class MenuAddActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         menu_add_rv.layoutManager = LinearLayoutManager(applicationContext)
         menu_add_rv.adapter = adapterMenu
+        adapterMenu.isFilledMain = viewModel.isFilledMain
     }
-
-    private var dialog: DialogManager? = null
 
     private fun clickedItemMenu(position: Int) {
         viewModel.position = position
-        viewModel.isActiveDialog = true
         openDialog()
     }
 
@@ -84,13 +91,9 @@ class MenuAddActivity : AppCompatActivity() {
             })
 
             getTemporaryStorage().observe(this@MenuAddActivity, Observer {
-                log("!!!!! $it")
-                if (it.isNotEmpty() && dialog != null) dialog?.dismiss()
-                val list: MutableMap<Int, String> = itemData.toMutableMap()
-                for (i in it.keys) {
-                    list[i] = it[i]!!
-                }
-                adapterMenu.update(list.map { it.value })
+                if (!isActiveDialog)
+                    dialog?.dismiss()
+                adapterMenu.update(it.get())
             })
 
         }
@@ -106,12 +109,14 @@ class MenuAddActivity : AppCompatActivity() {
                 viewModel.position!!,
                 resources.configuration.orientation
             )
+        viewModel.isActiveDialog = true
         dialog?.show()
     }
 
 
     private fun initActiveDialog() {
         if (viewModel.isActiveDialog) {
+            log("GDE BLIAT&&&&&&&&&&&&&&")
             openDialog()
         }
     }
@@ -123,7 +128,7 @@ class MenuAddActivity : AppCompatActivity() {
         initToolbar()
         initRecyclerView()
         initObserver()
-        adapterMenu.add(itemData.map { it.value })
+        adapterMenu.add(ITEM_ADD_MENU)
     }
 
 }

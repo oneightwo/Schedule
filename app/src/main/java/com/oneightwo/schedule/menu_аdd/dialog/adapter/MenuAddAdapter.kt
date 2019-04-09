@@ -1,4 +1,4 @@
-package com.oneightwo.schedule.menu_аdd
+package com.oneightwo.schedule.menu_аdd.dialog.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.item_menu_add.view.*
 class MenuAddAdapter(
     private val clicked: (Int) -> Unit
 ) : BaseAdapter<String, MenuAddAdapter.MenuAddViewHolder>() {
+
+    var isFilledMain = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuAddViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_menu_add, parent, false)
@@ -32,7 +34,11 @@ class MenuAddAdapter(
                 if (!ITEM_ADD_MENU[position].equals(getItemData(position))) {
                     item_menu_add_tv.setTextColor(Color.BLACK)
                 } else {
-                    item_menu_add_tv.setTextColor(resources.getColor(R.color.colorGray))
+                    if (!isFilledMain && (position == 0 || position == 1 || position == 2 || position == 3 || position == 4)) {
+                        item_menu_add_tv.setTextColor(Color.RED)
+                    } else {
+                        item_menu_add_tv.setTextColor(resources.getColor(R.color.colorGray))
+                    }
                 }
 
                 icon_iv.setImageResource(IC_ITEM_ADD_MENU[position])

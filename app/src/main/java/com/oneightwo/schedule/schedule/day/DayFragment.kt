@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
+import com.oneightwo.schedule.database.schedule.Schedule
+import com.oneightwo.schedule.schedule.base.FormatOutput
+import com.oneightwo.schedule.tools.TYPES_CLASSES
+import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.fragment_day.*
 
 class DayFragment : BaseFragment() {
@@ -28,19 +32,25 @@ class DayFragment : BaseFragment() {
         }
     }
 
-//    private fun getDataDay(data: List<Schedule>): List<FormatOutput> {
-//
-////        val types = listOf(R.drawable.ic_school_black_24dp, )
-////        val data = data.filter { it.week == this.week && it.day.equals(DAY_OF_WEEK[numberPage])}
-////        var dayData: ArrayList<FormatOutput>
-////        for (i in data) {
-////            dayData(
-////                FormatOutput(
-////                    i.type
-////                )
-////            )
-////        }
-//    }
+    private fun getDataDay(schedule: List<Schedule>): List<FormatOutput> {
+        log("schedule = $schedule")
+        val result = arrayListOf<FormatOutput>()
+        val data = schedule.filter { it.day == numberPage && it.week == week }.sortedBy { it.firstTime }
+        log("data = $data")
+        for (i in data) {
+            result.add(
+                FormatOutput(
+                    TYPES_CLASSES[i.type!!],
+                    i.subject,
+                    "${i.firstTime} - ${i.secondTime}",
+                    i.cabinet,
+                    i.teacher
+                )
+            )
+        }
+        log("result = $result")
+        return result
+    }
 
     private val adapterDay by lazy { DayAdapter() }
 
@@ -51,8 +61,8 @@ class DayFragment : BaseFragment() {
 
     private fun initObservers() {
         viewModel.day.observe(this, Observer {
-//            getDataDay(it)
-//            adapterDay.update(data.filter { it.day == numberPage })
+            log("OPAAAAAAAAAAAAAA DAY_FRAGMENT")
+            adapterDay.update(getDataDay(it))
         })
 
     }
@@ -60,6 +70,7 @@ class DayFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.numberPage = numberPage
+        log("$numberPage $week")
         initRecyclerView()
         initObservers()
     }

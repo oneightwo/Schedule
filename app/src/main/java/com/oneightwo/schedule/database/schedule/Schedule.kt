@@ -23,5 +23,5 @@ data class Schedule (
     @ColumnInfo(name = "teacher")
     val teacher: String?,
     @ColumnInfo(name = "type")
-    val type: String?
+    val type: Int?
 )
