@@ -9,9 +9,9 @@ data class Schedule (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "week")
-    val week: String,
+    val week: Int,
     @ColumnInfo(name = "day")
-    val day: String,
+    val day: Int,
     @ColumnInfo(name = "first_time")
     val firstTime: String,
     @ColumnInfo(name = "second_time")

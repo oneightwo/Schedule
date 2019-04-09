@@ -7,25 +7,40 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
-import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.fragment_day.*
 
 class DayFragment : BaseFragment() {
 
     private val numberPage by lazy { arguments?.getInt(ARG_NUMBER) ?: 0 }
+    private val week by lazy { arguments?.getInt(WEEK) ?: 0 }
 
     companion object {
         const val ARG_NUMBER = "number"
+        const val WEEK = "week"
 
-        fun newInstance(numberPage: Int): DayFragment {
+        fun newInstance(numberPage: Int, week: Int): DayFragment {
             val fragment = DayFragment()
             fragment.arguments = Bundle().apply {
                 putInt(ARG_NUMBER, numberPage)
+                putInt(WEEK, week)
             }
-            log(numberPage.toString())
             return fragment
         }
     }
+
+//    private fun getDataDay(data: List<Schedule>): List<FormatOutput> {
+//
+////        val types = listOf(R.drawable.ic_school_black_24dp, )
+////        val data = data.filter { it.week == this.week && it.day.equals(DAY_OF_WEEK[numberPage])}
+////        var dayData: ArrayList<FormatOutput>
+////        for (i in data) {
+////            dayData(
+////                FormatOutput(
+////                    i.type
+////                )
+////            )
+////        }
+//    }
 
     private val adapterDay by lazy { DayAdapter() }
 
@@ -35,7 +50,8 @@ class DayFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.day.observe(this, Observer { data ->
+        viewModel.day.observe(this, Observer {
+//            getDataDay(it)
 //            adapterDay.update(data.filter { it.day == numberPage })
         })
 

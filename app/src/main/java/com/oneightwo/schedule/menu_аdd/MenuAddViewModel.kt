@@ -34,6 +34,7 @@ class MenuAddViewModel : ViewModel() {
     private val teacher = teacherDao.getAllData()
     private val subject = subjectDao.getAllData()
     private val cabinet = cabinetDao.getAllData()
+    var isActiveDialog = false
 
     var position: Int? = null
 
@@ -118,12 +119,6 @@ class MenuAddViewModel : ViewModel() {
             .subscribe {
                 temporaryStorage.value = mutableMapOf()
             }
-    }
-
-    companion object {
-        val DAY_OF_WEEK = listOf("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота")
-        val TYPE_WEEK = listOf("Четная", "Нечетная")
-        val TYPE_LESSON = listOf("Лекция", "Практика", "Лабораторная")
     }
 
 }

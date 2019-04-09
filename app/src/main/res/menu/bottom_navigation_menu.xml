@@ -7,6 +7,14 @@
             android:icon="@drawable/ic_schedule_24dp"
             android:title="@string/schedule"
             app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/action_notes"
+            android:enabled="true"
+            android:icon="@drawable/ic_import_contacts_black_24dp"
+            android:title="@string/notes"
+            app:showAsAction="ifRoom"/>
+
     <item
             android:id="@+id/action_alarms"
             android:enabled="true"
@@ -20,4 +28,6 @@
             android:icon="@drawable/ic_settings_white_24dp"
             android:title="@string/settings"
             app:showAsAction="ifRoom"/>
+
+
 </menu>

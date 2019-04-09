@@ -8,13 +8,14 @@ import com.oneightwo.schedule.R
 import com.oneightwo.schedule.schedule.day.DayFragment
 
 class DaysViewPagerAdapter(
+    private val week: Int,
     private val context: Context,
     fragmentManager: FragmentManager
 ) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val fragments = ArrayList<Fragment>().apply {
         for (i in 0..5) {
-            add(DayFragment.newInstance(i))
+            add(DayFragment.newInstance(i, week))
         }
     }
 

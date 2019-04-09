@@ -2,7 +2,11 @@ package com.oneightwo.schedule.schedule.menu
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.oneightwo.schedule.R
@@ -22,8 +26,8 @@ class ScheduleFragment : BaseFragment() {
             .get(ScheduleViewModel::class.java)
     }
 
-    private fun initViewPager() {
-        val adapter = DaysViewPagerAdapter(context ?: return, childFragmentManager)
+    private fun initViewPager(week: Int) {
+        val adapter = DaysViewPagerAdapter(week, context ?: return, childFragmentManager)
         schedule_vp.adapter = adapter
         schedule_tl.setupWithViewPager(schedule_vp)
     }
@@ -36,43 +40,36 @@ class ScheduleFragment : BaseFragment() {
 
         week_fab.setOnClickListener {
             viewModel.changeStateWeekFAB()
-        }
-
-        week_fab.setOnLongClickListener {
-            viewModel.changeStateAddFAB()
-            return@setOnLongClickListener true
+            if (viewModel.week == 1) viewModel.week = 2
+            else viewModel.week = 1
+            initViewPager(viewModel.week)
         }
     }
 
-    private fun initAddFAB() {
-        viewModel.getStateAddFAB().observe(this, Observer {
-            if (it) add_fab.show()
-            else add_fab.hide()
-        })
+    private fun initToolBar() {
+        (activity as AppCompatActivity).setSupportActionBar(schedule_toolbar)
+    }
 
-        add_fab.setOnClickListener {
-//            val v = ViewAnimationUtils.createCircularReveal(add_fab, add_fab.scrollX, add_fab.scrollY,  0F,  this.view?.width!!.toFloat())
-//            v.interpolator = AccelerateDecelerateInterpolator()
-//            v.duration = 3000
-//            v.start()
-//            val nextFrag = MenuAddFragment()
-//            activity!!.supportFragmentManager.beginTransaction()
-//                .replace(com.oneightwo.schedule.R.id.container, nextFrag, "findThisFragment")
-//                .addToBackStack(null)
-//                .commit()
-            val intent = Intent(context, MenuAddActivity::class.java)
-            startActivity(intent)
-            viewModel.changeStateAddFAB()
-        }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_app_bar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent = Intent(context, MenuAddActivity::class.java)
+        startActivity(intent)
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewPager()
+        setHasOptionsMenu(true)
+        initToolBar()
+        initViewPager(viewModel.week)
         initWeekFAB()
-        initAddFAB()
     }
 
     override fun getLayoutId() = R.layout.fragment_schedule
+
 
 }

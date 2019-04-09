@@ -9,7 +9,7 @@ import com.oneightwo.schedule.base.BaseAdapter
 import kotlinx.android.synthetic.main.item_dialog_list_add.view.*
 
 class AddListDialogAdapter(
-    private val setData: (String) -> Unit
+    private val setData: (Any) -> Unit
 ) : BaseAdapter<String, AddListDialogAdapter.AddListDialogViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddListDialogViewHolder {
@@ -27,7 +27,7 @@ class AddListDialogAdapter(
                 hint_tv.text = getItemData(position)
 
                 item_hint_rl.setOnClickListener {
-                    setData(getItemData(position))
+                    setData(position)
                 }
             }
         }

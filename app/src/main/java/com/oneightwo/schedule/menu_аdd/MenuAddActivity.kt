@@ -1,6 +1,8 @@
 package com.oneightwo.schedule.menu_аdd
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -33,33 +35,34 @@ class MenuAddActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.add_toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val data = viewModel.getTemporaryStorage().value!!
+        if (data[0] != null && data[1] != null && data[2] != null && data[3] != null && data[4] != null) {
+            viewModel.insert()
+            adapterMenu.update(itemData.map { it.value })
+            Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Заполните обязательные поля", Toast.LENGTH_SHORT).show()
+        }
+        return true
+    }
+
     private fun initRecyclerView() {
         menu_add_rv.layoutManager = LinearLayoutManager(applicationContext)
         menu_add_rv.adapter = adapterMenu
-    }
-
-    private fun initDoneFAB() {
-        done_fab.setOnClickListener {
-            val data = viewModel.getTemporaryStorage().value!!
-            if (data[0] != null && data[1] != null && data[2] != null && data[3] != null && data[4] != null) {
-                viewModel.insert()
-                adapterMenu.update(itemData.map { it.value })
-                Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Заполните обязательные поля", Toast.LENGTH_SHORT).show()
-            }
-
-//            finish()
-        }
     }
 
     private var dialog: DialogManager? = null
 
     private fun clickedItemMenu(position: Int) {
         viewModel.position = position
-        dialog =
-            DialogManager(this, viewModel::getData, viewModel::setData, viewModel::deleteData, viewModel.position!!)
-        dialog?.show()
+        viewModel.isActiveDialog = true
+        openDialog()
     }
 
     private fun initObserver() {
@@ -93,30 +96,34 @@ class MenuAddActivity : AppCompatActivity() {
         }
     }
 
+    private fun openDialog() {
+        dialog =
+            DialogManager(
+                this,
+                viewModel::getData,
+                viewModel::setData,
+                viewModel::deleteData,
+                viewModel.position!!,
+                resources.configuration.orientation
+            )
+        dialog?.show()
+    }
+
+
+    private fun initActiveDialog() {
+        if (viewModel.isActiveDialog) {
+            openDialog()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_add)
+        initActiveDialog()
         initToolbar()
         initRecyclerView()
-        initDoneFAB()
         initObserver()
         adapterMenu.add(itemData.map { it.value })
-    }
-
-    companion object {
-
-        val itemData =
-            mapOf(
-                0 to "Четная/Нечетная неделя",
-                1 to "День недели",
-                2 to "Начало занятия",
-                3 to "Конец занятия",
-                4 to "Предмет",
-                5 to "Кабинет",
-                6 to "Преподаватель",
-                7 to "Тип занятия"
-            )
-
     }
 
 }

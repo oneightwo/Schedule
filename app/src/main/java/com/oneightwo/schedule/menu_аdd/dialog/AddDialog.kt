@@ -2,7 +2,6 @@ package com.oneightwo.schedule.menu_аdd.dialog
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.oneightwo.schedule.R
 import com.oneightwo.schedule.menu_аdd.MenuAddActivity
 import com.oneightwo.schedule.menu_аdd.dialog.adapter.AddDialogAdapter
 import kotlinx.android.synthetic.main.dialog_day_of_week.view.*
@@ -12,7 +11,8 @@ class AddDialog(
     private val context: MenuAddActivity,
     private val getData: () -> List<String>,
     private val setData: (String) -> Unit,
-    private val deleteData: (String) -> Unit
+    private val deleteData: (String) -> Unit,
+    private val layout: Int
 ) : androidx.appcompat.app.AlertDialog(context) {
 
     private val adapterDialog by lazy {
@@ -31,7 +31,7 @@ class AddDialog(
 //    }
 
     init {
-        val view = context.layoutInflater.inflate(R.layout.dialog_day_of_week, null)
+        val view = context.layoutInflater.inflate(layout, null)
         with(view) {
             initRecyclerView(view)
             adapterDialog.add(

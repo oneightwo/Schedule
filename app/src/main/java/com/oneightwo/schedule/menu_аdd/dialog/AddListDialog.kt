@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.dialog_day_of_week.view.*
 class AddListDialog(
     private val context: MenuAddActivity,
     private val getData: () -> List<String>,
-    private val setData: (String) -> Unit
-) :androidx.appcompat.app.AlertDialog(context){
+    private val setData: (Int) -> Unit
+) : androidx.appcompat.app.AlertDialog(context) {
 
-private val adapterDialog by lazy {
+    private val adapterDialog by lazy {
         AddListDialogAdapter(setData)
     }
 

@@ -1,24 +1,28 @@
 package com.oneightwo.schedule.menu_аdd.dialog
 
 import android.app.TimePickerDialog
-import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import com.oneightwo.schedule.R
 import com.oneightwo.schedule.menu_аdd.MenuAddActivity
 import java.util.*
 
 class DialogManager(
     private val context: MenuAddActivity,
     private val getData: () -> List<String>,
-    private val setData: (String) -> Unit,
+    private val setData: (Any) -> Unit,
     private val deleteData: (String) -> Unit,
-    private val position: Int
+    private val position: Int,
+    private val orientation: Int
 ) {
 
     private var dialogAdd: AddDialog? = null
     private var dialogAddList: AddListDialog? = null
 
+
     init {
         when (position) {
-            0, 1, 7 -> dialogAddList = AddListDialog(context, getData, setData)
+            0, 1, 7 -> dialogAddList = AddListDialog(
+                context, getData, setData)
             2, 3 -> {
                 val c = Calendar.getInstance()
                 val hour = c.get(Calendar.HOUR)
@@ -27,33 +31,26 @@ class DialogManager(
                 val tpd = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
                     setData("$h : $m")
                 }), hour, minute, true).show()
-                orientation(true)
             }
-            else -> dialogAdd = AddDialog(context, getData, setData, deleteData)
+            else -> dialogAdd = AddDialog(context, getData, setData, deleteData,  if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                R.layout.dialog_day_of_week_horizontal
+            } else {
+                R.layout.dialog_day_of_week
+            })
         }
     }
 
     fun show() {
         if (dialogAdd != null) dialogAdd?.show()
         else dialogAddList?.show()
-        orientation(true)
     }
 
     fun dismiss() {
         if (dialogAdd != null) dialogAdd?.dismiss()
         else dialogAddList?.dismiss()
-        orientation(false)
     }
 
     fun update() {
         if (dialogAdd != null) dialogAdd?.update()
-    }
-
-    private fun orientation(block: Boolean) {
-        context.requestedOrientation = if (block) {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_SENSOR
-        }
     }
 }
