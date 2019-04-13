@@ -25,6 +25,7 @@
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
             android:elevation="8dp"
+            app:elevation="8dp"
             style="@style/Widget.MaterialComponents.BottomNavigationView"
             android:background="@android:color/white"
             app:labelVisibilityMode="unlabeled"

@@ -12,19 +12,16 @@ import com.oneightwo.schedule.database.subject.Subject
 import com.oneightwo.schedule.database.subject.SubjectDao
 import com.oneightwo.schedule.database.teacher.Teacher
 import com.oneightwo.schedule.database.teacher.TeacherDao
-import com.oneightwo.schedule.database.time.TimeEnd
-import com.oneightwo.schedule.database.time.TimeEndDao
-import com.oneightwo.schedule.database.time.TimeStart
-import com.oneightwo.schedule.database.time.TimeStartDao
+import com.oneightwo.schedule.database.time.Time
+import com.oneightwo.schedule.database.time.TimeDao
 
 @Database(
-    entities = [Subject::class, TimeStart::class, TimeEnd::class, Teacher::class, Cabinet::class, Schedule::class],
+    entities = [Subject::class, Time::class, Teacher::class, Cabinet::class, Schedule::class],
     version = 1
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
-    abstract fun timeStartDao(): TimeStartDao
-    abstract fun timeEndDao(): TimeEndDao
+    abstract fun timeDao(): TimeDao
     abstract fun teacherDao(): TeacherDao
     abstract fun cabinetDao(): CabinetDao
     abstract fun scheduleDao(): ScheduleDao

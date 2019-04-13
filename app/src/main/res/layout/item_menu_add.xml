@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
             android:id="@+id/item_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,14 +21,23 @@
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_menu_add_tv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:textColor="@color/colorGray"
                 android:text="@string/new_record"
-                android:layout_height="56dp"/>
+                android:layout_toEndOf="@id/icon_iv"/>
 
-    </LinearLayout>
+        <ImageView
+                android:id="@+id/icon_error_iv"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="16dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_error_red_24dp"
+                android:visibility="gone"/>
+    </RelativeLayout>
 
     <View
             android:layout_width="match_parent"

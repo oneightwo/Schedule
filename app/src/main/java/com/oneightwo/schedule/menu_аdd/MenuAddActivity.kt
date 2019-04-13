@@ -9,10 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
-import com.oneightwo.schedule.menu_аdd.dialog.DialogManager
-import com.oneightwo.schedule.menu_аdd.dialog.adapter.MenuAddAdapter
+import com.oneightwo.schedule.dialog_add.DialogManager
 import com.oneightwo.schedule.tools.ITEM_ADD_MENU
-import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.activity_menu_add.*
 
 class MenuAddActivity : AppCompatActivity() {
@@ -50,7 +48,7 @@ class MenuAddActivity : AppCompatActivity() {
             viewModel.isFilledMain = false
             adapterMenu.isFilledMain = false
             adapterMenu.update(data.get())
-            Toast.makeText(this, "Заполните обязательные поля", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Заполните поля", Toast.LENGTH_SHORT).show()
         } else {
             viewModel.insert()
             viewModel.isFilledMain = true
@@ -74,10 +72,7 @@ class MenuAddActivity : AppCompatActivity() {
 
     private fun initObserver() {
         with(viewModel) {
-            getStartTime().observe(this@MenuAddActivity, Observer {
-                dialog?.update()
-            })
-            getEndTime().observe(this@MenuAddActivity, Observer {
+            getTime().observe(this@MenuAddActivity, Observer {
                 dialog?.update()
             })
             getTeacher().observe(this@MenuAddActivity, Observer {
@@ -116,7 +111,6 @@ class MenuAddActivity : AppCompatActivity() {
 
     private fun initActiveDialog() {
         if (viewModel.isActiveDialog) {
-            log("GDE BLIAT&&&&&&&&&&&&&&")
             openDialog()
         }
     }

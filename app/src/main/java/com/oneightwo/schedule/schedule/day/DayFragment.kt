@@ -35,12 +35,13 @@ class DayFragment : BaseFragment() {
     private fun getDataDay(schedule: List<Schedule>): List<FormatOutput> {
         log("schedule = $schedule")
         val result = arrayListOf<FormatOutput>()
-        val data = schedule.filter { it.day == numberPage && it.week == week }.sortedBy { it.firstTime }
+        val data = schedule.filter { it.day == numberPage && it.week == week }.sortedByDescending { it.firstTime }
         log("data = $data")
         for (i in data) {
+            log("${i.type}")
             result.add(
                 FormatOutput(
-                    TYPES_CLASSES[i.type!!],
+                    if (i.type != null) TYPES_CLASSES[i.type] else null,
                     i.subject,
                     "${i.firstTime} - ${i.secondTime}",
                     i.cabinet,
