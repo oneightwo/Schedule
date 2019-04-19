@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.dialog_day_of_week.view.*
 class AddListDialog(
     private val context: MenuAddActivity,
     private val getData: () -> List<String>,
-    private val setData: (String) -> Unit
+    private val setData: (String) -> Unit,
+    private val title: String
 ) : AlertDialog(context) {
 
     private val adapterDialog by lazy {
@@ -21,6 +22,7 @@ class AddListDialog(
     init {
         val view = context.layoutInflater.inflate(R.layout.dialog_add_list, null)
         with(view) {
+            name_record_tv.text = title
             initRecyclerView(view)
             adapterDialog.add(
                 getData()

@@ -17,8 +17,18 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 
 class ScheduleFragment : BaseFragment() {
 
+    private val dayOfWeek by lazy { arguments?.getInt(DATE_OF_WEEK) ?: 0 }
+
     companion object {
-        fun newInstance() = ScheduleFragment()
+        const val DATE_OF_WEEK = "dayOfWeek"
+
+        fun newInstance(dayOfWeek: Int): ScheduleFragment{
+            val fragment = ScheduleFragment()
+            fragment.arguments = Bundle().apply {
+                putInt(DATE_OF_WEEK, dayOfWeek - 1)
+            }
+            return fragment
+        }
     }
 
     private val viewModel by lazy {
@@ -29,6 +39,7 @@ class ScheduleFragment : BaseFragment() {
     private fun initViewPager(week: Int) {
         val adapter = DaysViewPagerAdapter(week, context ?: return, childFragmentManager)
         schedule_vp.adapter = adapter
+        schedule_vp.currentItem = dayOfWeek
         schedule_tl.setupWithViewPager(schedule_vp)
     }
 

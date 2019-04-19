@@ -38,7 +38,10 @@ class AddTimeAdapter(
                     start_time_tv.text = getItemData(position).start
                 }
 
-                if (getItemData(position).end != null) end_time_tv.text = getItemData(position).end
+                if (getItemData(position).end != null) {
+                    end_time_tv.setTextColor(Color.BLACK)
+                    end_time_tv.text = getItemData(position).end
+                }
 
                 start_time_tv.setOnClickListener {
                     setStartTime(position)

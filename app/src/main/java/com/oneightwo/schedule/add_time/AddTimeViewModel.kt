@@ -56,6 +56,7 @@ class AddTimeViewModel : ViewModel() {
                     value?.get(0)?.number = 0
                 }
             } else {
+                value = arrayListOf()
                 val list = arrayListOf<TimeTemporaryStorage>()
                 for ((i, v) in data.withIndex()) {
                     list.add(TimeTemporaryStorage())
@@ -128,14 +129,23 @@ class AddTimeViewModel : ViewModel() {
 
     fun insert() {
         val o = Observable.fromCallable {
-            val list = temporaryStorage.value?.map { Time("${it.start} - ${it.end}", it.number!!) }!!.toTypedArray()
-            list.forEach { log("INSERT -> ${it.time} ${it.number}") }
-            timeDao.update(list[0])
+            val list = temporaryStorage.value?.map { Time(0, "${it.start} - ${it.end}", it.number!!) }!!.toTypedArray()
+            for ((i, v) in time.value!!.withIndex()) {
+                if (!v.time.equals(list[i].time) || !v.number.equals(list[i].number)) {
+                    timeDao.update(Time(v.id, list[i].time, list[i].number))
+                }
+            }
+            val listFinal = list.drop(time.value!!.size).toTypedArray()
+            log("${list.map { it.time }}")
+            timeDao.insert(*listFinal)
+
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
+                temporaryStorage.value = arrayListOf()
                 log("INSERT_TIME")
             }
     }
+
 }

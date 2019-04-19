@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
+import com.oneightwo.schedule.database.schedule.Schedule
 import com.oneightwo.schedule.dialog_add.DialogManager
 import com.oneightwo.schedule.tools.ITEM_ADD_MENU
 import kotlinx.android.synthetic.main.activity_menu_add.*
@@ -50,10 +51,13 @@ class MenuAddActivity : AppCompatActivity() {
             adapterMenu.update(data.get())
             Toast.makeText(this, "Заполните поля", Toast.LENGTH_SHORT).show()
         } else {
-            viewModel.insert()
+            viewModel.save()
             viewModel.isFilledMain = true
             adapterMenu.isFilledMain = true
             adapterMenu.update(ITEM_ADD_MENU)
+            if (viewModel.getIsUpdateData().value!!) {
+                finish()
+            }
             Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show()
         }
         return true
@@ -91,6 +95,20 @@ class MenuAddActivity : AppCompatActivity() {
                 adapterMenu.update(it.get())
             })
 
+            getIsUpdateData().observe(this@MenuAddActivity, Observer {
+                if (it) {
+                    delete_fab.show()
+                    initDeleteFAB()
+                }
+            })
+
+        }
+    }
+
+    private fun initDeleteFAB() {
+        delete_fab.setOnClickListener {
+            viewModel.delete()
+            finish()
         }
     }
 
@@ -98,6 +116,7 @@ class MenuAddActivity : AppCompatActivity() {
         dialog =
             DialogManager(
                 this,
+                viewModel::getDataString,
                 viewModel::getData,
                 viewModel::setData,
                 viewModel::deleteData,
@@ -118,11 +137,18 @@ class MenuAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_add)
+
+        val arguments = intent.extras
+        val data: Schedule
+        if (arguments != null) {
+            data = arguments.getSerializable(Schedule::class.java.simpleName) as Schedule
+            viewModel.initTemporaryStorage(data)
+        }
+
         initActiveDialog()
         initToolbar()
         initRecyclerView()
         initObserver()
-        adapterMenu.add(ITEM_ADD_MENU)
     }
 
 }

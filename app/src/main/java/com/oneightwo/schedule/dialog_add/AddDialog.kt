@@ -13,7 +13,8 @@ class AddDialog(
     private val getData: () -> List<String>,
     private val setData: (String) -> Unit,
     private val deleteData: (String) -> Unit,
-    private val layout: Int
+    private val layout: Int,
+    private val title: String
 ) : AlertDialog(context) {
 
     private val adapterDialog by lazy {
@@ -35,6 +36,7 @@ class AddDialog(
         val view = context.layoutInflater.inflate(layout, null)
         with(view) {
             initRecyclerView(view)
+            name_record_tv.text = title
             adapterDialog.add(
                 getData()
             )

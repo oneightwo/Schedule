@@ -1,5 +1,6 @@
 package com.oneightwo.schedule.schedule.day
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
 import com.oneightwo.schedule.database.schedule.Schedule
+import com.oneightwo.schedule.menu_аdd.MenuAddActivity
 import com.oneightwo.schedule.schedule.base.FormatOutput
 import com.oneightwo.schedule.tools.TYPES_CLASSES
 import com.oneightwo.schedule.tools.log
@@ -35,7 +37,9 @@ class DayFragment : BaseFragment() {
     private fun getDataDay(schedule: List<Schedule>): List<FormatOutput> {
         log("schedule = $schedule")
         val result = arrayListOf<FormatOutput>()
-        val data = schedule.filter { it.day == numberPage && it.week == week }.sortedByDescending { it.firstTime }
+        val data = schedule.filter { it.day == numberPage && it.week == week }
+            .sortedBy { "${it.time.substringBefore(':')}.${it.time.substringAfter(':').substringBefore(' ')}".toDouble() }
+        viewModel.storage = data
         log("data = $data")
         for (i in data) {
             log("${i.type}")
@@ -43,7 +47,7 @@ class DayFragment : BaseFragment() {
                 FormatOutput(
                     if (i.type != null) TYPES_CLASSES[i.type] else null,
                     i.subject,
-                    "${i.firstTime} - ${i.secondTime}",
+                    i.time,
                     i.cabinet,
                     i.teacher
                 )
@@ -53,7 +57,7 @@ class DayFragment : BaseFragment() {
         return result
     }
 
-    private val adapterDay by lazy { DayAdapter() }
+    private val adapterDay by lazy { DayAdapter(::onClick) }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this)
@@ -77,6 +81,14 @@ class DayFragment : BaseFragment() {
     }
 
     override fun getLayoutId() = R.layout.fragment_day
+
+    private fun onClick(position: Int) {
+        val item: Schedule = viewModel.storage[position]
+
+        val intent = Intent(context, MenuAddActivity::class.java)
+        intent.putExtra(Schedule::class.java.simpleName, item)
+        startActivity(intent)
+    }
 
     private fun initRecyclerView() {
         subjects_rv.layoutManager = LinearLayoutManager(context)

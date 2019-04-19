@@ -11,6 +11,8 @@ val TYPE_LESSON = listOf("Лекция", "Практика", "Лаборатор
 val TYPES_CLASSES =
     listOf(R.drawable.ic_lecture_black_24dp, R.drawable.ic_practice_black_24dp, R.drawable.ic_laboratory_black_24dp)
 
+val TITLE = listOf("Неделя", "День недели", "Время", "Предмет", "Кабинет", "Преподаватель", "Тип занятия")
+
 val ITEM_ADD_MENU =
     listOf(
         "Четная/Нечетная неделя",

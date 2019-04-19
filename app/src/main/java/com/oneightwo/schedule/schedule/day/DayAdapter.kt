@@ -12,7 +12,9 @@ import com.oneightwo.schedule.base.BaseAdapter
 import com.oneightwo.schedule.schedule.base.FormatOutput
 import kotlinx.android.synthetic.main.item_day.view.*
 
-class DayAdapter : BaseAdapter<FormatOutput, DayAdapter.DataViewHolder>() {
+class DayAdapter(
+    private val onClick: (Int) -> Unit
+) : BaseAdapter<FormatOutput, DayAdapter.DataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
@@ -30,6 +32,9 @@ class DayAdapter : BaseAdapter<FormatOutput, DayAdapter.DataViewHolder>() {
                 time_tv.text = getItemData(position).time
                 cabinet_tv.text = getItemData(position).cabinet
                 teacher_tv.text = getItemData(position).teacher
+                click_ll.setOnClickListener {
+                    onClick(position)
+                }
                 if (getItemData(position).type != null) {
                     type_iv.visibility = View.VISIBLE
                     type_iv.setImageResource(getItemData(position).type!!)

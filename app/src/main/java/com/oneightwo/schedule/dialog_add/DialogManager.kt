@@ -3,10 +3,13 @@ package com.oneightwo.schedule.dialog_add
 import android.content.res.Configuration
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.menu_аdd.MenuAddActivity
+import com.oneightwo.schedule.menu_аdd.TimeBell
+import com.oneightwo.schedule.tools.TITLE
 
 class DialogManager(
     private val context: MenuAddActivity,
-    private val getData: () -> List<String>,
+    private val getDataString: () -> List<String>,
+    private val getData: () -> List<TimeBell>,
     private val setData: (String) -> Unit,
     private val deleteData: (String) -> Unit,
     private val position: Int,
@@ -20,17 +23,18 @@ class DialogManager(
     init {
         when (position) {
             0, 1, 6 -> dialogAddList = AddListDialog(
-                context, getData, setData
+                context, getDataString, setData, TITLE[position]
             )
             2 -> dialogAddTime = AddTimeDialog(
                 context, getData, setData
             )
             else -> dialogAdd = AddDialog(
-                context, getData, setData, deleteData, if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                context, getDataString, setData, deleteData, if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     R.layout.dialog_day_of_week_horizontal
                 } else {
                     R.layout.dialog_day_of_week
                 }
+                , TITLE[position]
             )
         }
     }

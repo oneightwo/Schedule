@@ -1,6 +1,5 @@
 package com.oneightwo.schedule.menu_аdd
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oneightwo.schedule.database.cabinet.Cabinet
@@ -15,9 +14,6 @@ import io.reactivex.schedulers.Schedulers
 
 class MenuAddViewModel : ViewModel() {
 
-    private val liveData: LiveData<List<Schedule>> = App.db.scheduleDao().getAllData()
-    private val storageData: Schedule? = null
-
     private var temporaryStorage = MutableLiveData<TemporaryStorage>()
 
     private val timeDao = App.db.timeDao()
@@ -25,6 +21,9 @@ class MenuAddViewModel : ViewModel() {
     private val subjectDao = App.db.subjectDao()
     private val cabinetDao = App.db.cabinetDao()
     private val scheduleDao = App.db.scheduleDao()
+
+    private var isUpdateData = MutableLiveData<Boolean>()
+    private var id: Int? = null
 
     private val time = timeDao.getAllData()
     private val teacher = teacherDao.getAllData()
@@ -37,11 +36,26 @@ class MenuAddViewModel : ViewModel() {
 
     init {
         temporaryStorage.value = TemporaryStorage()
+        isUpdateData.value = false
+    }
+
+
+    fun initTemporaryStorage(data: Schedule) {
+        isUpdateData.value = true
+        id = data.id
+        with(temporaryStorage) {
+            value = value.apply { value?.week = TYPE_WEEK[data.week - 1] }
+            value = value.apply { value?.day = DAY_OF_WEEK[data.day] }
+            value = value.apply { value?.time = data.time }
+            value = value.apply { value?.subject = data.subject }
+            value = value.apply { value?.cabinet = data.cabinet }
+            value = value.apply { value?.teacher = data.teacher }
+            value = value.apply { value?.type = if (data.type!= null) TYPE_LESSON[data.type] else null }
+        }
     }
 
     fun setData(data: String) {
         log("setData = $data")
-//        temporaryStorageList = temporaryStorage.value?.get() ?: listOf()
         isActiveDialog = false
         with(temporaryStorage) {
             when (position) {
@@ -56,7 +70,6 @@ class MenuAddViewModel : ViewModel() {
             }
         }
     }
-
 
     fun getTemporaryStorage() = temporaryStorage
 
@@ -80,13 +93,13 @@ class MenuAddViewModel : ViewModel() {
     fun getTeacher() = teacher
     fun getSubject() = subject
     fun getCabinet() = cabinet
+    fun getIsUpdateData() = isUpdateData
 
-    fun getData(): List<String> {
+    fun getDataString(): List<String> {
         log("GET_DATA")
         return when (position) {
             0 -> TYPE_WEEK
             1 -> DAY_OF_WEEK
-            2 -> time.value?.map { it.time } ?: arrayListOf()
             3 -> subject.value?.map { it.subject } ?: arrayListOf()
             4 -> cabinet.value?.map { it.cabinet } ?: arrayListOf()
             5 -> teacher.value?.map { it.teacher } ?: arrayListOf()
@@ -95,7 +108,43 @@ class MenuAddViewModel : ViewModel() {
         }
     }
 
-    fun insert() {
+    fun getData(): List<TimeBell> {
+        log("GET_DATA")
+        return time.value?.map { TimeBell(it.number, it.time) } ?: arrayListOf()
+    }
+
+    fun save() {
+        if (isUpdateData.value!!) update()
+        else insert()
+    }
+
+    private fun update() {
+        val o = Observable.fromCallable {
+            val data = temporaryStorage.value!!
+            scheduleDao.update(
+                Schedule(
+                    id = id!!,
+                    week = TYPE_WEEK.indexOf(data.week) + 1,
+                    day = DAY_OF_WEEK.indexOf(data.day),
+                    time = data.time!!,
+                    subject = data.subject!!,
+                    cabinet = data.cabinet,
+                    teacher = data.teacher,
+                    type = TYPE_LESSON.indexOf(data.type)
+                )
+            )
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                temporaryStorage.value = TemporaryStorage()
+                id = null
+                isUpdateData.value = false
+            }
+
+    }
+
+    private fun insert() {
         val o = Observable.fromCallable {
             val data = temporaryStorage.value
             if (data?.teacher != null) teacherDao.insert(Teacher(data.teacher!!))
@@ -108,8 +157,7 @@ class MenuAddViewModel : ViewModel() {
                     id = 0,
                     week = TYPE_WEEK.indexOf(data.week) + 1,
                     day = DAY_OF_WEEK.indexOf(data.day),
-                    firstTime = data.time!!,
-                    secondTime = data.time!!,
+                    time = data.time!!,
                     subject = data.subject!!,
                     cabinet = data.cabinet,
                     teacher = data.teacher,
@@ -122,6 +170,32 @@ class MenuAddViewModel : ViewModel() {
             .subscribe {
                 temporaryStorage.value = TemporaryStorage()
             }
+    }
+
+    fun delete() {
+        val o = Observable.fromCallable {
+            val data = temporaryStorage.value!!
+            scheduleDao.delete(
+                Schedule(
+                    id = id!!,
+                    week = TYPE_WEEK.indexOf(data.week) + 1,
+                    day = DAY_OF_WEEK.indexOf(data.day),
+                    time = data.time!!,
+                    subject = data.subject!!,
+                    cabinet = data.cabinet,
+                    teacher = data.teacher,
+                    type = TYPE_LESSON.indexOf(data.type)
+                )
+            )
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                temporaryStorage.value = TemporaryStorage()
+                id = null
+                isUpdateData.value = false
+            }
+
     }
 
 }

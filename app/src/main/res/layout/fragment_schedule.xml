@@ -47,6 +47,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/week_fab"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:background="@color/colorPrimary"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_margin="16dp"

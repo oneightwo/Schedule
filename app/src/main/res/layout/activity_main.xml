@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:itemIconTint="@color/selector"
+            app:itemBackground="@color/colorPrimary"
             app:itemTextColor="@color/selector"
             android:elevation="8dp"
             app:elevation="8dp"

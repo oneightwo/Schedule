@@ -9,12 +9,13 @@ import com.oneightwo.schedule.R
 import com.oneightwo.schedule.add_time.AddTimeActivity
 import com.oneightwo.schedule.dialog_add.adapter.AddTimeDialogAdapter
 import com.oneightwo.schedule.menu_аdd.MenuAddActivity
+import com.oneightwo.schedule.menu_аdd.TimeBell
 import kotlinx.android.synthetic.main.dialog_add_time_2.view.*
 
 
 class AddTimeDialog(
     private val context: MenuAddActivity,
-    private val getData: () -> List<String>,
+    private val getData: () -> List<TimeBell>,
     private val setData: (String) -> Unit
 ) : AlertDialog(context) {
 
