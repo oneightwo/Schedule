@@ -24,6 +24,24 @@ val ITEM_ADD_MENU =
         "Тип занятия"
     )
 
+val ITEM_ADD_NOTE_MENU =
+        listOf(
+            "Тема",
+            "Предмет",
+            "Текст",
+            "Время",
+            "Оповещение"
+        )
+
+val IC_ITEM_ADD_NOTE_MENU =
+        listOf(
+            R.drawable.format_title,
+            R.drawable.ic_subject_black_24dp,
+            R.drawable.cursor_text,
+            R.drawable.ic_access_time_black_24dp,
+            R.drawable.bell_outline
+        )
+
 val IC_ITEM_ADD_MENU =
     listOf(
         R.drawable.ic_sync_black_24dp,

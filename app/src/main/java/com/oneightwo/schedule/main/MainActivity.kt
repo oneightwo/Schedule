@@ -8,13 +8,13 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.alarm.AlarmFragment
-import com.oneightwo.schedule.schedule.menu.ScheduleFragment
+import com.oneightwo.schedule.notes.NotesFragment
+import com.oneightwo.schedule.schedule.main.ScheduleFragment
 import com.oneightwo.schedule.settings.SettingsFragment
 import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,16 +33,31 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             bottom_navigation.selectedItemId = savedInstanceState.getInt("opened_fragment")
         } else {
-            openFragment(ScheduleFragment.newInstance(getData()))
+            openFragment(ScheduleFragment.newInstance(getWeek(), getDay()))
         }
         bottom_navigation.setOnNavigationItemSelectedListener(navigationListener)
     }
 
-    private fun getData(): Int {
+    private fun getDay(): Int {
         val calendar = Calendar.getInstance()
         val date = calendar.time
         log("DATE -> ${SimpleDateFormat("u", Locale.ENGLISH).format(date.time)}")
-        return SimpleDateFormat("u", Locale.ENGLISH).format(date.time).toInt()
+        return if (SimpleDateFormat("u", Locale.ENGLISH).format(date.time).toInt() == 7)
+            1
+        else SimpleDateFormat("u", Locale.ENGLISH).format(date.time).toInt()
+    }
+
+    private fun getWeek(): Int {
+        val calendar = Calendar.getInstance()
+        val date = calendar.time
+        log("WEEK -> ${SimpleDateFormat("w", Locale.ENGLISH).format(date.time)}")
+        return if (SimpleDateFormat("w", Locale.ENGLISH).format(date.time).toInt() % 2 == 0) {
+            log("WEEK_NUMBER -> 2")
+            2
+        } else {
+            log("WEEK_NUMBER -> 1")
+            1
+        }
     }
 
     private val navigationListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -50,8 +65,13 @@ class MainActivity : AppCompatActivity() {
             previousMenuItem = item.itemId
             when (item.itemId) {
                 R.id.action_schedules -> {
-                    val dayFragment = ScheduleFragment.newInstance(getData())
+                    val dayFragment = ScheduleFragment.newInstance(getWeek(), getDay())
                     openFragment(dayFragment)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.action_notes -> {
+                    val notesFragment = NotesFragment.newInstance()
+                    openFragment(notesFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_alarms -> {

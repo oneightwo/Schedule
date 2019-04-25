@@ -9,7 +9,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseAdapter
-import com.oneightwo.schedule.schedule.base.FormatOutput
+import com.oneightwo.schedule.schedule.tools.FormatOutput
 import kotlinx.android.synthetic.main.item_day.view.*
 
 class DayAdapter(

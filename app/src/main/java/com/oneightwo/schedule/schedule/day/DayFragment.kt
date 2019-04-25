@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseFragment
 import com.oneightwo.schedule.database.schedule.Schedule
-import com.oneightwo.schedule.menu_аdd.MenuAddActivity
-import com.oneightwo.schedule.schedule.base.FormatOutput
+import com.oneightwo.schedule.schedule.menu_аdd.MenuAddActivity
+import com.oneightwo.schedule.schedule.tools.FormatOutput
 import com.oneightwo.schedule.tools.TYPES_CLASSES
 import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.fragment_day.*
