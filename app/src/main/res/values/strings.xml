@@ -19,8 +19,9 @@
     <string name="teacher">Преподаватель</string>
     <string name="cabinet">Кабинет</string>
 
-    <string name="save">Сохранить</string>
+
     <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
 
     <string name="example_subject">Пример: Высшая математика</string>
     <string name="example_time">Пример: 8:00–9:45</string>
@@ -30,6 +31,10 @@
     <string name="note">Заметка</string>
     <string name="start_lesson">Начало занятия</string>
     <string name="end_lesson">Конец занятия</string>
+    <string name="notes">Заметки</string>
+    <string name="add">Добавить</string>
+    <string name="create">Создать</string>
+    <string name="number_class">Номер занятия</string>
 
     <string-array name="menu_array">
         <item>Предметы</item>

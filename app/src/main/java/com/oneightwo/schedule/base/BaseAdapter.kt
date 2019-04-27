@@ -19,7 +19,7 @@ abstract class BaseAdapter<T, ViewHolder: RecyclerView.ViewHolder> : RecyclerVie
         notifyItemInserted(this.data.size - 1)
     }
 
-    fun revove(data: T) {
+    fun remove(data: T) {
         val index = this.data.indexOf(data)
         this.data.remove(data)
         notifyItemRemoved(index)

@@ -86,7 +86,6 @@ class TimeFragment : BaseSettingFragment<Time>(1) {
         } else {
             add_fab.setImageResource(R.drawable.ic_delete_white_24dp)
             clickDeleteFAB()
-
         }
     }
 

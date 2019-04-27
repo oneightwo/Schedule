@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Cabinet(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey
     @ColumnInfo(name = "cabinet")
-    val cabinet: String?
+    val cabinet: String
 )

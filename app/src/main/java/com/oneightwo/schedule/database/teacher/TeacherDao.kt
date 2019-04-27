@@ -1,29 +1,14 @@
 package com.oneightwo.schedule.database.teacher
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
 import androidx.room.Query
+import com.oneightwo.schedule.database.base.BaseDao
 
 @Dao
-interface TeacherDao {
+abstract class TeacherDao : BaseDao<Teacher>{
+
     @Query("SELECT * FROM teacher")
-    fun getAll(): List<Teacher>
+    abstract fun getAllData(): LiveData<List<Teacher>>
 
-    @Query("SELECT * FROM teacher WHERE id IN (:teacherIds)")
-    fun loadAllByIds(teacherIds: IntArray): List<Teacher>
-
-    @Query("SELECT * FROM teacher WHERE id = (:teacherId)")
-    fun loadById(teacherId: Int): Teacher
-
-
-//    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(subject: String): Subject
-
-    @Insert
-    fun insertAll(vararg teachers: Teacher)
-
-    @Delete
-    fun delete(teachers: Teacher)
 }

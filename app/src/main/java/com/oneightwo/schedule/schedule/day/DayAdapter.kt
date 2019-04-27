@@ -9,10 +9,12 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.base.BaseAdapter
-import com.oneightwo.schedule.database.schedule.Schedule
+import com.oneightwo.schedule.schedule.tools.FormatOutput
 import kotlinx.android.synthetic.main.item_day.view.*
 
-class DayAdapter : BaseAdapter<Schedule, DayAdapter.DataViewHolder>() {
+class DayAdapter(
+    private val onClick: (Int) -> Unit
+) : BaseAdapter<FormatOutput, DayAdapter.DataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
@@ -29,11 +31,18 @@ class DayAdapter : BaseAdapter<Schedule, DayAdapter.DataViewHolder>() {
                 subject_tv.text = getItemData(position).subject
                 time_tv.text = getItemData(position).time
                 cabinet_tv.text = getItemData(position).cabinet
-
-                full_arrow_down_iv.setOnClickListener {
-                    animate(full_arrow_down_iv, full_arrow_up_iv)
-                    full_ll.visibility = View.VISIBLE
+                teacher_tv.text = getItemData(position).teacher
+                click_ll.setOnClickListener {
+                    onClick(position)
                 }
+                if (getItemData(position).type != null) {
+                    type_iv.visibility = View.VISIBLE
+                    type_iv.setImageResource(getItemData(position).type!!)
+                }
+                else {
+                    type_iv.visibility = View.GONE
+                }
+//                type_iv.setImageResource(getItemData(position).type)
             }
 
         }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:id="@+id/item_hint_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:id="@+id/ic_number_iv"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/numeric_1_circle_outline"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_centerVertical="true"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hint_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/colorBlack"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/ic_number_iv"
+                android:text="@string/time"/>
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+</LinearLayout>

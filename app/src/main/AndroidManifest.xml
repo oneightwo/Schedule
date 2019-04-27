@@ -3,15 +3,24 @@
           package="com.oneightwo.schedule">
 
     <application
-            android:allowBackup="true"
             android:name=".tools.App"
+            android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity"
-                  android:windowSoftInputMode="adjustPan">
+        <activity android:name=".notes.add_notes.AddNoteActivity">
+        </activity>
+        <activity android:name="com.oneightwo.schedule.schedule.add_time.AddTimeActivity">
+        </activity>
+        <activity android:name=".add.AddActivity">
+        </activity>
+        <activity android:name="com.oneightwo.schedule.schedule.menu_аdd.MenuAddActivity">
+        </activity>
+        <activity
+                android:name=".main.MainActivity"
+                android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

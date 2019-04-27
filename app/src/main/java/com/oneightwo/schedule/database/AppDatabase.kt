@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.oneightwo.schedule.database.cabinet.Cabinet
 import com.oneightwo.schedule.database.cabinet.CabinetDao
+import com.oneightwo.schedule.database.notes.Notes
+import com.oneightwo.schedule.database.notes.NotesDao
 import com.oneightwo.schedule.database.schedule.Schedule
 import com.oneightwo.schedule.database.schedule.ScheduleDao
 import com.oneightwo.schedule.database.subject.Subject
@@ -16,15 +18,16 @@ import com.oneightwo.schedule.database.time.Time
 import com.oneightwo.schedule.database.time.TimeDao
 
 @Database(
-    entities = [Subject::class, Time::class, Teacher::class, Cabinet::class, Schedule::class],
+    entities = [Subject::class, Time::class, Teacher::class, Cabinet::class, Schedule::class, Notes::class],
     version = 1
 )
-abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase: RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
     abstract fun timeDao(): TimeDao
     abstract fun teacherDao(): TeacherDao
     abstract fun cabinetDao(): CabinetDao
     abstract fun scheduleDao(): ScheduleDao
+    abstract fun notesDao(): NotesDao
 
     companion object {
 
@@ -45,5 +48,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return instance!!
         }
+
     }
 }

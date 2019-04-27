@@ -3,9 +3,10 @@ package com.oneightwo.schedule.database.schedule
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
-data class Schedule (
+data class Schedule(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "week")
@@ -17,9 +18,9 @@ data class Schedule (
     @ColumnInfo(name = "subject")
     val subject: String,
     @ColumnInfo(name = "cabinet")
-    val cabinet: String,
+    val cabinet: String?,
     @ColumnInfo(name = "teacher")
-    val teacher: String,
+    val teacher: String?,
     @ColumnInfo(name = "type")
-    val type: String
-)
+    val type: Int?
+) : Serializable
