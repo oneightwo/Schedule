@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.dialog_add_time.view.*
 
 class AddTimeDialog(
     private val context: MenuAddActivity,
-    private val getData: () -> List<TimeBell>,
+    private val getData: List<TimeBell>,
     private val setData: (String) -> Unit
 ) : AlertDialog(context) {
 
@@ -28,7 +28,7 @@ class AddTimeDialog(
         with(view) {
             initRecyclerView(view)
             adapterDialog.add(
-                getData()
+                getData
             )
             create_b.setOnClickListener {
                 startNewActivity()

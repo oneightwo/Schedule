@@ -35,6 +35,9 @@
     <string name="add">Добавить</string>
     <string name="create">Создать</string>
     <string name="number_class">Номер занятия</string>
+    <string name="week">Неделя</string>
+    <string name="day_of_week">День недели</string>
+    <string name="type_lesson">Тип занятия</string>
 
     <string-array name="menu_array">
         <item>Предметы</item>

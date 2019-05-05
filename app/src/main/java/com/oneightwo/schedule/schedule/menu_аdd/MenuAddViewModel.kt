@@ -30,8 +30,6 @@ class MenuAddViewModel : ViewModel() {
     private val subject = subjectDao.getAllData()
     private val cabinet = cabinetDao.getAllData()
 
-    private val hint = arrayListOf<String>()
-
     var isActiveDialog = false
     var isFilledMain = true
     var position: Int? = null
@@ -39,10 +37,6 @@ class MenuAddViewModel : ViewModel() {
     init {
         temporaryStorage.value = TemporaryStorage()
         isUpdateData.value = false
-        hint.apply {
-            add(TYPE_WEEK[0])
-            add(DAY_OF_WEEK[0])
-        }
     }
 
 
@@ -63,8 +57,6 @@ class MenuAddViewModel : ViewModel() {
     fun initTemporaryStorage() {
         with(temporaryStorage) {
             value = value.apply {
-                value?.week = hint[0]
-                value?.day = hint[1]
             }
         }
     }
@@ -92,11 +84,10 @@ class MenuAddViewModel : ViewModel() {
         val o = Observable.fromCallable {
             log("DELETE $data")
             when (position) {
-                2 -> timeDao.delete(time.value?.first { it.time.equals(data) }!!)
-                3 -> timeDao.delete(time.value?.first { it.time.equals(data) }!!)
-                4 -> subjectDao.delete(subject.value?.first { it.subject.equals(data) }!!)
-                5 -> cabinetDao.delete(cabinet.value?.first { it.cabinet.equals(data) }!!)
-                6 -> teacherDao.delete(teacher.value?.first { it.teacher.equals(data) }!!)
+                2 -> timeDao.delete(time.value?.first { it.time == data }!!)
+                3 -> subjectDao.delete(subject.value?.first { it.subject == data }!!)
+                4 -> cabinetDao.delete(cabinet.value?.first { it.cabinet == data }!!)
+                5 -> teacherDao.delete(teacher.value?.first { it.teacher == data }!!)
             }
         }
             .subscribeOn(Schedulers.io())
@@ -123,7 +114,7 @@ class MenuAddViewModel : ViewModel() {
         }
     }
 
-    fun getData(): List<TimeBell> {
+    fun getDataTimeBell(): List<TimeBell> {
         log("GET_DATA")
         return time.value?.map { TimeBell(it.number, it.time) } ?: arrayListOf()
     }
@@ -165,9 +156,6 @@ class MenuAddViewModel : ViewModel() {
             if (data?.teacher != null) teacherDao.insert(Teacher(data.teacher!!))
             if (data?.cabinet != null) cabinetDao.insert(Cabinet(data.cabinet!!))
             subjectDao.insert(Subject(data?.subject!!))
-
-            hint[0] = data.week!!
-            hint[1] = data.day!!
 
             log("ADD_DB_SCHEDULE")
             scheduleDao.insert(

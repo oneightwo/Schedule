@@ -7,7 +7,7 @@ import com.oneightwo.schedule.schedule.dialog_add.AddListDialog
 
 class DialogManager(
     private val context: Activity,
-    private val getData: () -> List<String>,
+    private val getData: List<String>,
     private val setTime: (String) -> Unit,
     private val setDate: (String) -> Unit,
     private val position: Int,
@@ -22,7 +22,7 @@ class DialogManager(
 
     init {
         when (position) {
-            SUBJECT_POSITION -> dialogAddList = AddListDialog(context, getData, ::setData, "Предмет")
+            SUBJECT_POSITION -> dialogAddList = AddListDialog(context, ::getData, ::setData, "Предмет", {})
             TIME_POSITION -> {
                 dialogAddTime = AddTimeDialog(context, ::setTimeDialog)
                 dialogAddDate = AddDateDialog(context, ::setDateDialog)

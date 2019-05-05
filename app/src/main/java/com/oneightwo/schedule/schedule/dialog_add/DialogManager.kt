@@ -6,13 +6,14 @@ import com.oneightwo.schedule.schedule.menu_аdd.MenuAddActivity
 import com.oneightwo.schedule.schedule.menu_аdd.TimeBell
 import com.oneightwo.schedule.tools.TITLE
 
-class DialogManager(
+class DialogManager (
     private val context: MenuAddActivity,
-    private val getDataString: () -> List<String>,
-    private val getData: () -> List<TimeBell>,
+    private val position: Int,
+    private val dataString: () -> List<String>,
+    private val dataTimeBell: List<TimeBell>,
     private val setData: (String) -> Unit,
     private val deleteData: (String) -> Unit,
-    private val position: Int,
+    private val dismissDialog: () -> Unit,
     private val orientation: Int
 ) {
 
@@ -23,13 +24,13 @@ class DialogManager(
     init {
         when (position) {
             0, 1, 6 -> dialogAddList = AddListDialog(
-                context, getDataString, setData, TITLE[position]
+                context, dataString, setData, TITLE[position], dismissDialog
             )
             2 -> dialogAddTime = AddTimeDialog(
-                context, getData, setData
+                context, dataTimeBell, setData
             )
             else -> dialogAdd = AddDialog(
-                context, getDataString, setData, deleteData, if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                context, dataString, setData, deleteData, if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     R.layout.dialog_add_et_and_list_horizontal
                 } else {
                     R.layout.dialog_add_et_and_list
@@ -50,8 +51,10 @@ class DialogManager(
     fun dismiss() {
         when (position) {
             0, 1, 6 -> {
-                if (dialogAddList != null)
+                if (dialogAddList != null) {
                     dialogAddList?.dismiss()
+                    dismissDialog()
+                }
             }
             2 -> dialogAddTime?.dismiss()
             else -> dialogAdd?.dismiss()

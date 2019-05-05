@@ -6,13 +6,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oneightwo.schedule.R
 import com.oneightwo.schedule.schedule.dialog_add.adapter.AddListDialogAdapter
+import com.oneightwo.schedule.tools.log
 import kotlinx.android.synthetic.main.dialog_add_et_and_list.view.*
 
 class AddListDialog(
     private val context: Activity,
     private val getData: () -> List<String>,
     private val setData: (String) -> Unit,
-    private val title: String
+    private val title: String,
+    private val dismissDialog: () -> Unit
 ) : AlertDialog(context) {
 
     private val adapterDialog by lazy {
@@ -38,4 +40,10 @@ class AddListDialog(
         }
     }
 
+    override fun dismiss() {
+        log("DISMISS")
+        dismissDialog()
+        super.dismiss()
+
+    }
 }

@@ -72,7 +72,7 @@ class AddNoteActivity : AppCompatActivity() {
         log("OPEN_DIALOG")
         dialog = DialogManager(
             this,
-            viewModel::getData,
+            viewModel.getData(),
             viewModel::setTime,
             viewModel::setDate,
             position,
